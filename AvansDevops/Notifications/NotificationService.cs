@@ -21,8 +21,9 @@ public class NotificationService : INotificationObserver
     {
         foreach (var _notificationAdapter in _notificationAdapters)
         {
+            //maybe remove
             _notificationAdapter.SendNotification(
-                $"Backlog item '{backlogItem.title}' has been updated: {message}. "
+                $"Backlog item '{backlogItem}' has been updated: {message}. "
             );
         }
     }
