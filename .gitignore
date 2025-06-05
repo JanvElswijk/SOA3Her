@@ -55,3 +55,4 @@ nunit-*.xml
 
 .idea/
 .vscode/
+.config/dotnet-tools.json
