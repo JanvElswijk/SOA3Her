@@ -2,13 +2,12 @@ using System.Collections.Generic;
 
 public class BacklogItem
 {
-    private List<IObserver> Observers { get; set; } = new List<IObserver>();
+    private List<INotificationObserver> Observers { get; set; } = new List<INotificationObserver>();
     public string title { get; set; }
     public string description { get; set; }
     public string status { get; set; }
     public int storyPoints { get; set; }
     public List<BacklogItem> activities { get; set; } = new List<BacklogItem>();
-
 
     public BacklogItem(string title, string description, string status, int storyPoints)
     {
@@ -17,9 +16,8 @@ public class BacklogItem
         this.status = status;
         this.storyPoints = storyPoints;
     }
-    
 
-    public void AddObserver(IObserver observer)
+    public void AddObserver(INotificationObserver observer)
     {
         Observers.Add(observer);
     }
@@ -31,6 +29,4 @@ public class BacklogItem
             observer.Update(this);
         }
     }
-
-
 }

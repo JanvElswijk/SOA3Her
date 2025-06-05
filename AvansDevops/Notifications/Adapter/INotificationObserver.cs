@@ -1,4 +1,4 @@
-public interface IObserver
+public interface INotificationObserver
 {
     public void Update(BacklogItem backlogItem);
 }
