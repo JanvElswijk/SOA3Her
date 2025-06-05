@@ -4,7 +4,7 @@ public class Sprint
     private List<User> _testers = new List<User>();
     private User _leadDeveloper;
     private User _scrumMaster;
-
+    //private pipeline _pipeline;
 
     public Sprint(List<BacklogItem> backlogItems, User leadDeveloper, List<User> testers)
     {
