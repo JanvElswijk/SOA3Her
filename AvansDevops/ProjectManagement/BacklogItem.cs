@@ -22,11 +22,11 @@ public class BacklogItem
         Observers.Add(observer);
     }
 
-    public void NotifyObservers()
+    public void NotifyObservers(string message)
     {
         foreach (var observer in Observers)
         {
-            observer.Update(this);
+            observer.Update(this, message);
         }
     }
 }

@@ -17,14 +17,12 @@ public class NotificationService : INotificationObserver
         _notificationAdapters.Add(notificationAdapter);
     }
 
-    public void Update(BacklogItem backlogItem)
+    public void Update(BacklogItem backlogItem, string message)
     {
         foreach (var _notificationAdapter in _notificationAdapters)
         {
             _notificationAdapter.SendNotification(
-                $"Backlog item '{backlogItem.title}' has been updated. "
-                    + $"Status: {backlogItem.status}, Story Points: {backlogItem.storyPoints}. "
-                    + $"Description: {backlogItem.description}"
+                $"Backlog item '{backlogItem.title}' has been updated: {message}. "
             );
         }
     }

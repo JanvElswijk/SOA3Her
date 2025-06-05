@@ -1,5 +1,5 @@
 public interface INotificationAdapter
 {
-    public void SendNotification(string message);
+    void SendNotification(string message);
 
 }
