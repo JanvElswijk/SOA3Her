@@ -1,4 +1,4 @@
-public class NotificationService : INotificationObserver
+public class NotificationService
 {
     private readonly List<INotificationAdapter> _notificationAdapters = new();
 
@@ -6,6 +6,8 @@ public class NotificationService : INotificationObserver
     {
         _notificationAdapters.Add(notificationAdapter);
     }
+
+
 
     public void AddNotificationAdapter(INotificationAdapter notificationAdapter)
     {
@@ -17,13 +19,13 @@ public class NotificationService : INotificationObserver
         _notificationAdapters.Add(notificationAdapter);
     }
 
-    public void Update(BacklogItem backlogItem, string message)
+    public void Update(User user, BacklogItem backlogItem, string message)
     {
         foreach (var _notificationAdapter in _notificationAdapters)
         {
             //maybe remove
             _notificationAdapter.SendNotification(
-                $"Backlog item '{backlogItem}' has been updated: {message}. "
+                $"{user.Name} has been notified"
             );
         }
     }

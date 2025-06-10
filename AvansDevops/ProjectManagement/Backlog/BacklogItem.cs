@@ -13,14 +13,22 @@ public class BacklogItem
 
     private User? _user;
 
-    public BacklogItem(string title, string description, IBacklogItemState state, int storyPoints)
+    public BacklogItem(string title, string description, int storyPoints)
     {
         this._title = title;
         this._description = description;
-        this._state = state;
+        this._state = new NotInSprintBacklogItemState();
         this._storyPoints = storyPoints;
     }
 
+
+
+    //Voeg een item toe aan de sprint en zet de state naar Todo
+    public void SetSprint(Sprint sprint)
+    {
+        ChangeState(new TodoBacklogItemState(this));
+        _sprint = sprint;
+    }
 
 
     //Notify:
@@ -30,51 +38,49 @@ public class BacklogItem
 
     //verdere notificaties komen aan bod wanneer een sprint eindigt
 
-    public void NotifyTesters(string message)
-    {
-        _sprint.GetTesters().ForEach(tester =>
-           {
-               tester.Update(this, message);
-           });
-    }
-
-
-    public void NotifyScrumMaster(string message)
-    {
-        _sprint.getScrumMaster().Update(this, message);
-    }
-
 
 
     public void ChangeState(IBacklogItemState newState)
     {
         this._state = newState;
     }
+    
+    public void Start()
+    {
+        _state.Start();
+    }
+    public void Complete()
+    {
+        _state.Complete();
+    }
+    public void Reject()
+    {
+        _state.Reject();
+    }
+    public void Approve()
+    {
+        _state.Approve();
+    }
+    
+ 
 
+    public Sprint? GetSprint()
+    {
+        return this._sprint;
+    }
 
-//wordt dit gebruikt?
+    //wordt dit gebruikt?
     public void SetUser(User user)
     {
         this._user = user;
     }
-        
+
     public User? GetUser()
     {
         return this._user;
     }
-    // public void AddObserver(INotificationObserver observer)
-    // {
-    //     _observers.Add(observer);
-    // }
 
 
-    // public void NotifyObservers(string message)
-    // {
-    //     foreach (var observer in _observers)
-    //     {
-    //         observer.Update(this, message);
-    //     }
-    // }
 }
 
 

@@ -16,7 +16,7 @@ public class DoingBacklogItemState : IBacklogItemState
     public void Complete()
     {
         _backlogItem.ChangeState(new ReadyForTestingBacklogItemState(_backlogItem));
-        _backlogItem.NotifyTesters("Backlog item has been completed and moved to Ready for Testing state.");
+        _backlogItem.GetSprint().NotifyTesters(_backlogItem, "Backlog item has been completed and moved to Ready for Testing state.");
     }
 
     public void Reject()

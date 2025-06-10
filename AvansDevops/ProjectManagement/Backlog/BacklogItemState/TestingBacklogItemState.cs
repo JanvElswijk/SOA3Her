@@ -15,7 +15,7 @@ public class TestingBacklogItemState : IBacklogItemState
     public void Reject()
     {
         _backlogItem.ChangeState(new TodoBacklogItemState(_backlogItem));
-        _backlogItem.NotifyScrumMaster("Backlog item has been rejected and moved back to Todo state.");
+        _backlogItem.GetSprint().NotifyScrumMaster(_backlogItem, "Backlog item has been rejected and moved back to Todo state.");
     }
 
     public void Approve()

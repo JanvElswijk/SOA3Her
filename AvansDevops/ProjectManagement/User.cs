@@ -1,14 +1,16 @@
 public class User : INotificationObserver
 {
-    private string Name;
+    public string Name;
     private string Email;
     private UserRole Role;
+    private NotificationService _notificationService;
 
     public User(string name, string email, UserRole role)
     {
         Name = name;
         Email = email;
         Role = role;
+        _notificationService = new NotificationService(new EmailAdapter());        
     }
 
     public UserRole GetRole()
@@ -18,7 +20,7 @@ public class User : INotificationObserver
 
     public void Update(BacklogItem backlogItem, string message)
     {
-        Console.WriteLine($"Notification for {Name}, ({Email}): {message}");
+       _notificationService.Update(this, backlogItem, message);
     }
 }
 
@@ -28,5 +30,6 @@ public enum UserRole
     LeadDeveloper,
     Tester,
     ProjectManager,
+    ScrumMaster,
     ProductOwner,
 }
