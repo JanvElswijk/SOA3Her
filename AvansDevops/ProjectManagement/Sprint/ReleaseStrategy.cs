@@ -4,12 +4,9 @@ public class ReleaseStrategy : ISprintStrategy
 {
 
     //moet run pipeline
-    public void Execute(Pipeline pipeline, string? summary)
+    public bool? Execute(Pipeline pipeline, string? summary)
     {
         IPipelineVisitor visitor = new DevOpsPipelineVisitor();
-        pipeline.Execute(visitor);
-
-        
-
+       return  pipeline.Execute(visitor);
     }
 }

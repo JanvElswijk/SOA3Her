@@ -2,5 +2,5 @@ using AvansDevops.DevOps;
 
 public interface ISprintStrategy
 {
-    public void Execute(Pipeline pipeline, string? summary);
+    public bool? Execute(Pipeline pipeline, string? summary);
 }

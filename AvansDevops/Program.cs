@@ -75,9 +75,10 @@ User developer = new User("Alice", "alice@mail.com", UserRole.Developer);
 User leadDeveloper = new User("Bob", "bob@mail.com", UserRole.LeadDeveloper);
 User scrumMaster = new User("Charlie", "charlie@mail.com", UserRole.ScrumMaster);
 User tester = new User("Dave", "dave@mail.com", UserRole.Tester);
+User productOwner = new User("Eve", "eve@mail.com", UserRole.ProductOwner);
 
 
-Sprint sprint = new Sprint(new List<BacklogItem> { backlogItem }, leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), pipeline);
+Sprint sprint = new Sprint(new List<BacklogItem> { backlogItem }, leadDeveloper, new List<User> { tester }, productOwner, scrumMaster, new ReviewStrategy(), pipeline);
 
 
 SCMService _SCMService = new SCMService(new GitAdapter());
@@ -91,6 +92,5 @@ backlogItem.Start(); //todo -> doing
 backlogItem.Complete(); //todo -> ready for testing //notify dave
 
 
-sprint.ExecuteStrategy();
 sprint.SetSummary("Okay");
 sprint.ExecuteStrategy();
