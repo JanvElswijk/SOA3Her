@@ -1,9 +1,9 @@
 ﻿namespace AvansDevops.DevOps.Test;
 
-public class NUnitActivity(bool coverage, string? publishUrl) : TestActivity(coverage, publishUrl) {
+public class SeleniumActivity(bool coverage, string? publishUrl) : TestActivity(coverage, publishUrl) {
     public override bool RunTests() {
         var sb = new System.Text.StringBuilder();
-        sb.Append("[DEVOPS : Test] Running NUnit tests");
+        sb.Append("[DEVOPS : Test] Running Selenium tests");
         if (coverage) {
             sb.Append(", with code coverage enabled");
         }
