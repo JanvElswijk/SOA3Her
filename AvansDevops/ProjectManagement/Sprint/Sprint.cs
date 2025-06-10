@@ -1,3 +1,5 @@
+using AvansDevops.DevOps;
+
 public class Sprint
 {
     private List<BacklogItem> _backlogItems;
@@ -5,10 +7,10 @@ public class Sprint
     private User _leadDeveloper;
     private User _scrumMaster;
     private ISprintStrategy _strategy;
-    // private pipeline _pipeline;
-
+    private Pipeline _pipeline;
+    private string _summary;
     //lijst van developers?
-    public Sprint(List<BacklogItem> backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy)
+    public Sprint(List<BacklogItem> backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline pipeline)
     {
         _strategy = strategy;
         _backlogItems = backlogItems;
@@ -16,6 +18,8 @@ public class Sprint
         {
             backlogItem.SetSprint(this);
         }
+
+        _pipeline = pipeline;
 
         _leadDeveloper = leadDeveloper;
         _testers = testers;
@@ -28,12 +32,16 @@ public class Sprint
         _strategy = strategy;
     }
 
-    //FinishSprint();?
+    //FinishSprint();?  dit misschien callen vanuit state pattern?
     public void ExecuteStrategy()
     {
-        _strategy.Execute();
+        _strategy.Execute(_pipeline, _summary);
     }
 
+    public void SetSummary(string summary)
+    {
+        _summary = summary;
+    }   
 
     public void NotifyTesters(BacklogItem item, string message)
     {

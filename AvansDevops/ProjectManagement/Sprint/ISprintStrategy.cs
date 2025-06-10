@@ -1,4 +1,6 @@
+using AvansDevops.DevOps;
+
 public interface ISprintStrategy
 {
-    public void Execute();
+    public void Execute(Pipeline pipeline, string? summary);
 }

@@ -1,4 +1,4 @@
-using AvansDevops.DevOps;
+﻿using AvansDevops.DevOps;
 using AvansDevops.DevOps.Analysis;
 using AvansDevops.DevOps.Build;
 using AvansDevops.DevOps.Deploy;
@@ -60,8 +60,8 @@ DevOpsPipeline pipeline = builder
     .AddUtilityActivity(ua4)
     .Build();
 
-IPipelineVisitor visitor = new DevOpsPipelineVisitor();
-pipeline.Execute(visitor);
+// IPipelineVisitor visitor = new DevOpsPipelineVisitor();
+// pipeline.Execute(visitor);
 
 
 BacklogItem backlogItem = new BacklogItem("Implement Observer Pattern", "Implement the observer pattern in the project management system.", 5);
@@ -77,7 +77,7 @@ User scrumMaster = new User("Charlie", "charlie@mail.com", UserRole.ScrumMaster)
 User tester = new User("Dave", "dave@mail.com", UserRole.Tester);
 
 
-Sprint sprint = new Sprint(new List<BacklogItem> { backlogItem }, leadDeveloper, new List<User> { tester }, scrumMaster);
+Sprint sprint = new Sprint(new List<BacklogItem> { backlogItem }, leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), pipeline);
 
 
 SCMService _SCMService = new SCMService(new GitAdapter());
@@ -88,7 +88,9 @@ _SCMService.Pull();
 
 backlogItem.SetUser(developer);
 backlogItem.Start(); //todo -> doing
-backlogItem.Complete(); //todo -> ready for testing
+backlogItem.Complete(); //todo -> ready for testing //notify dave
 
 
-
+sprint.ExecuteStrategy();
+sprint.SetSummary("Okay");
+sprint.ExecuteStrategy();
