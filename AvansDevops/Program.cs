@@ -78,8 +78,13 @@ User tester = new User("Dave", "dave@mail.com", UserRole.Tester);
 User productOwner = new User("Eve", "eve@mail.com", UserRole.ProductOwner);
 
 
-Sprint sprint = new Sprint(new List<BacklogItem> { backlogItem }, leadDeveloper, new List<User> { tester }, productOwner, scrumMaster, new ReviewStrategy(), pipeline);
+// Sprint sprint = new Sprint(new Backlog(), leadDeveloper, new List<User> { tester }, productOwner, scrumMaster, new ReviewStrategy(), pipeline);
 
+
+Project project = new Project("Project Management System", new SCMService(new GitAdapter()), new List<User> { developer, leadDeveloper, scrumMaster, tester }, productOwner);
+project.AddBacklogItem(backlogItem);
+project.StartNewSprint(leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), pipeline);
+project.MoveBacklogItemToSprint(backlogItem);
 
 SCMService _SCMService = new SCMService(new GitAdapter());
 _SCMService.CreateBranch("feature/observer-pattern");
@@ -91,6 +96,7 @@ backlogItem.SetUser(developer);
 backlogItem.Start(); //todo -> doing
 backlogItem.Complete(); //todo -> ready for testing //notify dave
 
-
-sprint.SetSummary("Okay");
-sprint.ExecuteStrategy();
+project._currentSprint.SetSummary("okay");
+project.FinishSprint();
+// sprint.SetSummary("Okay");
+// sprint.ExecuteStrategy();

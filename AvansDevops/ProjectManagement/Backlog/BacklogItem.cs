@@ -69,7 +69,6 @@ public class BacklogItem
         return this._sprint;
     }
 
-    //wordt dit gebruikt?
     public void SetUser(User user)
     {
         this._user = user;

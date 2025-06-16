@@ -2,7 +2,7 @@ using AvansDevops.DevOps;
 
 public class Sprint
 {
-    private List<BacklogItem> _backlogItems;
+    public Backlog _backlogItems { get; private set; }
     private List<User> _testers;
     private User _leadDeveloper;
     private User _scrumMaster;
@@ -10,13 +10,13 @@ public class Sprint
     private Pipeline _pipeline;
     private User _productOwner;
     private string _summary;
-    //lijst van developers?
-    public Sprint(List<BacklogItem> backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline pipeline)
+
+    public Sprint(Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline? pipeline)
     {
         _productOwner = productowner;
         _strategy = strategy;
         _backlogItems = backlogItems;
-        foreach (var backlogItem in _backlogItems)
+        foreach (var backlogItem in _backlogItems._items)
         {
             backlogItem.SetSprint(this);
         }
@@ -51,7 +51,7 @@ public class Sprint
     
     }
 
-
+ 
 
     public void SetSummary(string summary)
     {
