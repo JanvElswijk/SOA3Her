@@ -83,7 +83,7 @@ User productOwner = new User("Eve", "eve@mail.com", UserRole.ProductOwner);
 
 Project project = new Project("Project Management System", new SCMService(new GitAdapter()), new List<User> { developer, leadDeveloper, scrumMaster, tester }, productOwner);
 project.AddBacklogItem(backlogItem);
-project.StartNewSprint(leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), pipeline);
+project.StartNewSprint(leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), null);
 project.MoveBacklogItemToSprint(backlogItem);
 
 SCMService _SCMService = new SCMService(new GitAdapter());

@@ -7,9 +7,11 @@ public class Sprint
     private User _leadDeveloper;
     private User _scrumMaster;
     private ISprintStrategy _strategy;
+    private User _productOwner; //misschien weg
     private Pipeline _pipeline;
-    private User _productOwner;
     private string _summary;
+
+    private List<INotificationObserver> _observers = new List<INotificationObserver>();
 
     public Sprint(Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline? pipeline)
     {
@@ -25,7 +27,30 @@ public class Sprint
 
         _leadDeveloper = leadDeveloper;
         _testers = testers;
+
         _scrumMaster = scrumMaster;
+
+
+        //add observers
+        _observers.Add(_scrumMaster);
+        _observers.Add(_productOwner);
+        _observers.AddRange(_testers);
+    }
+
+    public void AddObserver(INotificationObserver observer)
+    {
+        if (!_observers.Contains(observer))
+        {
+            
+        _observers.Add(observer);
+        }
+    }
+    public void RemoveObserver(INotificationObserver observer)
+    {
+        if (_observers.Contains(observer))
+        {
+            _observers.Remove(observer);
+        }
     }
 
 
@@ -34,7 +59,6 @@ public class Sprint
         _strategy = strategy;
     }
 
-    //FinishSprint();?  dit misschien callen vanuit state pattern?
     public void ExecuteStrategy()
     {
         bool? result = _strategy.Execute(_pipeline, _summary);
@@ -58,23 +82,34 @@ public class Sprint
         _summary = summary;
     }   
 
+    public void NotifyObservers(string message)
+    {
+        foreach (var observer in _observers)
+            observer.Update(null, message);
+    }
+
     public void NotifyTesters(BacklogItem item, string message)
     {
-        _testers.ForEach(tester =>
-        {
-            tester.Update(item, message);
-        });
+     foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.Tester))
+    {
+        observer.Update(item, message);
+    }
     }
 
-    public void NotifyScrumMaster(BacklogItem? item,string message)
+public void NotifyScrumMaster(BacklogItem item, string message)
+{
+    foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ScrumMaster))
     {
-        _scrumMaster.Update(item, message); 
+        observer.Update(item, message);
     }
+}
 
-
-    public void NotifyProductOwner(string message)
+public void NotifyProductOwner(string message)
+{
+    foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ProductOwner))
     {
-        _productOwner.Update(null, message);
+        observer.Update(null, message);
+    }
 }
 
 

@@ -21,7 +21,7 @@ public class Project
 
     public void AddBacklogItem(BacklogItem item)
     {
-        _backlog._items.Add(item);  //addBacklogItem in backlog
+        _backlog.AddBacklogItem(item);  //addBacklogItem in backlog
     }
 
     public void AddDeveloper(User developer)

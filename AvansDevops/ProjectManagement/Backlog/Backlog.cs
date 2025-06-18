@@ -15,6 +15,11 @@ public class Backlog
         {
             _items = new List<BacklogItem>();
         }
+
+        if (_items.Contains(item))
+        {
+            throw new InvalidOperationException("Backlog item already exists in the backlog.");
+        }
         _items.Add(item);
     }
 }
