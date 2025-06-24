@@ -6,7 +6,7 @@ public class Project
     private Backlog _backlog;
     private SCMService _scmService;
     private List<User> _developers; //In project is het algemeen, in sprint specificeer je wie scrumMaster, leadDeveloper, testers zijn
-    private User _productOwner;
+    public User _productOwner;
     //private Forum forum;
     public Sprint _currentSprint{ get; private set; } //Current sprint, kan null zijn als er geen sprint is;
 
@@ -35,7 +35,7 @@ public class Project
 
     public void StartNewSprint(User leadDeveloper, List<User> tester, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
     {
-        _currentSprint = new Sprint(new Backlog(), leadDeveloper, tester, scrumMaster, _productOwner, strategy, pipeline);
+        _currentSprint = new Sprint(this, new Backlog(), leadDeveloper, tester, scrumMaster, _productOwner, strategy, pipeline);
     }
     public void FinishSprint()
     {

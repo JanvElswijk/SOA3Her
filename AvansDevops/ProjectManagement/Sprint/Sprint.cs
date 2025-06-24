@@ -7,15 +7,15 @@ public class Sprint
     private User _leadDeveloper;
     private User _scrumMaster;
     private ISprintStrategy _strategy;
-    private User _productOwner; //misschien weg
     private Pipeline _pipeline;
     private string _summary;
+    private Project _project;
 
     private List<INotificationObserver> _observers = new List<INotificationObserver>();
 
-    public Sprint(Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline? pipeline)
+    public Sprint(Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline? pipeline)
     {
-        _productOwner = productowner;
+        _project = project;
         _strategy = strategy;
         _backlogItems = backlogItems;
         foreach (var backlogItem in _backlogItems._items)
@@ -33,7 +33,7 @@ public class Sprint
 
         //add observers
         _observers.Add(_scrumMaster);
-        _observers.Add(_productOwner);
+        _observers.Add(_project._productOwner);
         _observers.AddRange(_testers);
     }
 
