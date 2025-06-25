@@ -1,8 +1,8 @@
+using AvansDevops.Notifications;
+using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement;
 using Moq;
-using NUnit.Framework;
 
-namespace AvansDevops.Test.Notifications
-{
     [TestFixture]
     public class NotificationServiceTests
     {
@@ -91,4 +91,3 @@ namespace AvansDevops.Test.Notifications
 
        
     }
-}

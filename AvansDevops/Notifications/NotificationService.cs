@@ -1,3 +1,7 @@
+using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement;
+
+namespace AvansDevops.Notifications;
 public class NotificationService
 {
     private readonly List<INotificationAdapter> _notificationAdapters = new();

@@ -1,3 +1,4 @@
+using AvansDevops.ProjectManagement;
 public class TodoBacklogItemState : IBacklogItemState
 {
     private readonly BacklogItem _backlogItem;
@@ -28,11 +29,11 @@ public class TodoBacklogItemState : IBacklogItemState
             throw new InvalidOperationException("Cannot start a backlog item in the Todo state without a developer assigned.");
         }
 
-         if (_backlogItem.GetUser().GetRole() != UserRole.Developer)
+        if (_backlogItem.GetUser().GetRole() != UserRole.Developer)
         {
             throw new InvalidOperationException("Only developers can start a backlog item in the Todo state.");
         }
-        
+
         _backlogItem.ChangeState(new DoingBacklogItemState(_backlogItem));
     }
 }

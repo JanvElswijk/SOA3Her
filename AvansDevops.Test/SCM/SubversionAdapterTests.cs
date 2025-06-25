@@ -3,8 +3,6 @@ using System;
 using System.IO;
 
 
-namespace AvansDevops.Test.SCM
-{
     [TestFixture]
     public class SubversionAdapterTests
     {
@@ -59,4 +57,3 @@ namespace AvansDevops.Test.SCM
             }
         }
     }
-}

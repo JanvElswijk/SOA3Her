@@ -1,3 +1,5 @@
+namespace AvansDevops.Notifications.Adapter;
+
 public class EmailAdapter : INotificationAdapter
 {
     public virtual void SendNotification(string message)

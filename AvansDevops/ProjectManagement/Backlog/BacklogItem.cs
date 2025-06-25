@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using AvansDevops.ProjectManagement;
+using AvansDevops.Notifications.Adapter;
 
 public class BacklogItem
 {
@@ -13,6 +15,7 @@ public class BacklogItem
 
     private User? _user;
 
+    public BacklogItem(){}
     public BacklogItem(string title, string description, int storyPoints)
     {
         this._title = title;
@@ -20,7 +23,6 @@ public class BacklogItem
         this._state = new NotInSprintBacklogItemState();
         this._storyPoints = storyPoints;
     }
-
 
 
     //Voeg een item toe aan de sprint en zet de state naar Todo
@@ -64,7 +66,7 @@ public class BacklogItem
     
  
 
-    public Sprint? GetSprint()
+    public virtual Sprint? GetSprint()
     {
         return this._sprint;
     }

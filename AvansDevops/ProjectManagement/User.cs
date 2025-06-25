@@ -1,3 +1,8 @@
+using AvansDevops.Notifications;
+using AvansDevops.Notifications.Adapter;
+
+namespace AvansDevops.ProjectManagement;
+
 public class User : INotificationObserver
 {
     public string Name;
@@ -5,23 +10,28 @@ public class User : INotificationObserver
     private UserRole Role;
     private NotificationService _notificationService;
 
+
+public User(){}
+
     public User(string name, string email, UserRole role)
     {
         Name = name;
         Email = email;
         Role = role;
-        _notificationService = new NotificationService(new EmailAdapter());        
+        _notificationService = new NotificationService(new EmailAdapter());
     }
 
-    public UserRole GetRole()
+    public virtual UserRole GetRole()
     {
         return Role;
     }
 
-    public void Update(BacklogItem backlogItem, string message)
+    public virtual void Update(BacklogItem backlogItem, string message)
     {
-       _notificationService.Update(this, backlogItem, message);
+        _notificationService.Update(this, backlogItem, message);
     }
+
+    
 }
 
 public enum UserRole

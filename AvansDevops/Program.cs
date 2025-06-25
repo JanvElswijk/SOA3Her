@@ -6,6 +6,9 @@ using AvansDevops.DevOps.Package;
 using AvansDevops.DevOps.Source;
 using AvansDevops.DevOps.Test;
 using AvansDevops.DevOps.Utility;
+using AvansDevops.Notifications;
+using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement;
 
 AnalysisActivity aa = new SonarqubeActivity();
 

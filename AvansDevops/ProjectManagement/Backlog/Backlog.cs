@@ -1,6 +1,8 @@
+namespace AvansDevops.ProjectManagement;
 public class Backlog
 {
     public List<BacklogItem> _items;
+
 
 
     public Backlog()
@@ -11,10 +13,6 @@ public class Backlog
     //todo
     public void AddBacklogItem(BacklogItem item)
     {
-        if (_items == null)
-        {
-            _items = new List<BacklogItem>();
-        }
 
         if (_items.Contains(item))
         {

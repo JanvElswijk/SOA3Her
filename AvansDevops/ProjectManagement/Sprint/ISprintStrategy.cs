@@ -1,4 +1,5 @@
 using AvansDevops.DevOps;
+namespace AvansDevops.ProjectManagement;
 
 public interface ISprintStrategy
 {

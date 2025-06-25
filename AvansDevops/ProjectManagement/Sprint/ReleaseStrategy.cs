@@ -1,5 +1,7 @@
 using AvansDevops.DevOps;
 
+namespace AvansDevops.ProjectManagement;
+
 public class ReleaseStrategy : ISprintStrategy
 {
 

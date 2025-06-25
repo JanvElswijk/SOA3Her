@@ -1,6 +1,11 @@
-using AvansDevops.DevOps;
 
-public class Sprint
+using AvansDevops.DevOps;
+using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement;
+
+
+namespace AvansDevops.ProjectManagement;
+public class Sprint 
 {
     public Backlog _backlogItems { get; private set; }
     private List<User> _testers;
@@ -13,7 +18,12 @@ public class Sprint
 
     private List<INotificationObserver> _observers = new List<INotificationObserver>();
 
-    public Sprint(Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, User productowner, ISprintStrategy strategy, Pipeline? pipeline)
+    public Sprint()
+    {
+        
+    }
+
+    public Sprint(Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
     {
         _project = project;
         _strategy = strategy;
@@ -37,14 +47,19 @@ public class Sprint
         _observers.AddRange(_testers);
     }
 
+
+    //cc2
     public void AddObserver(INotificationObserver observer)
     {
         if (!_observers.Contains(observer))
         {
-            
-        _observers.Add(observer);
+
+            _observers.Add(observer);
         }
     }
+    
+    
+    //cc2
     public void RemoveObserver(INotificationObserver observer)
     {
         if (_observers.Contains(observer))
@@ -54,11 +69,20 @@ public class Sprint
     }
 
 
+    public IReadOnlyList<INotificationObserver> GetObservers()
+    {
+        return _observers.AsReadOnly();
+    }
+
+
+
+    //cc1
     public void SetStrategy(ISprintStrategy strategy)
     {
         _strategy = strategy;
     }
 
+    //cc3
     public void ExecuteStrategy()
     {
         bool? result = _strategy.Execute(_pipeline, _summary);
@@ -72,58 +96,51 @@ public class Sprint
         {
             NotifyScrumMaster(null, "Sprint failed.");
         }
-    
+
     }
 
- 
 
+    //cc1
     public void SetSummary(string summary)
     {
         _summary = summary;
-    }   
+    }
 
+    //cc1
     public void NotifyObservers(string message)
     {
         foreach (var observer in _observers)
             observer.Update(null, message);
     }
 
-    public void NotifyTesters(BacklogItem item, string message)
+
+    //cc1
+    public void NotifyTesters(BacklogItem? item , string message)
     {
-     foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.Tester))
-    {
-        observer.Update(item, message);
-    }
+        foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.Tester))
+        {
+            observer.Update(item, message);
+        }
     }
 
-public void NotifyScrumMaster(BacklogItem item, string message)
-{
-    foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ScrumMaster))
-    {
-        observer.Update(item, message);
-    }
-}
 
-public void NotifyProductOwner(string message)
-{
-    foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ProductOwner))
+    //cc1
+    public void NotifyScrumMaster(BacklogItem item, string message)
     {
-        observer.Update(null, message);
+        foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ScrumMaster))
+        {
+            observer.Update(item, message);
+        }
     }
-}
 
+    //cc1
+    public void NotifyProductOwner(string message)
+    {
+        foreach (var observer in _observers.OfType<User>().Where(u => u.GetRole() == UserRole.ProductOwner))
+        {
+            observer.Update(null, message);
+        }
+    }
 
-    public List<User> GetTesters()
-    {
-        return _testers;
-    }
-    
-    public User getScrumMaster()
-    {
-        return _scrumMaster;
-    }
-    public User GetLeadDeveloper()
-    {
-        return _leadDeveloper;
-    }
+ 
 }

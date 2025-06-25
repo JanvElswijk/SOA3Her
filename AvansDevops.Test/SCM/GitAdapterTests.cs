@@ -3,8 +3,6 @@ using System;
 using System.IO;
 
 
-namespace AvansDevops.Test.SCM
-{
     [TestFixture]
     public class GitAdapterTests
     {
@@ -60,4 +58,3 @@ namespace AvansDevops.Test.SCM
             }
         }
     }
-}
