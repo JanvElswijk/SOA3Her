@@ -8,7 +8,7 @@ public class BacklogItem
     // private List<INotificationObserver> _observers = new List<INotificationObserver>();
     private string _title;
     private string _description;
-    private IBacklogItemState _state;
+    public IBacklogItemState _state;
     private int _storyPoints;
     private Sprint? _sprint;
     private List<BacklogItem> _activities = new List<BacklogItem>();

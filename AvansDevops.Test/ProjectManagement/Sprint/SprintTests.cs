@@ -18,10 +18,11 @@ public class SprintTests
             new User("Tester1", "test@mail.com", UserRole.Tester),
             new User("Tester2", "test2@mail.com", UserRole.Tester)
         };
-
+       var mockAdapter = new Mock<ISCMAdapter>();
+            var service = new SCMService(mockAdapter.Object);
         scrumMaster = new User("Scrum Master", "scrum@mail.com", UserRole.ScrumMaster);
         leadDeveloper = new User("Lead Dev", "lead.dev@example.com", UserRole.LeadDeveloper);
-        var project = new Project("Test Project", null, testers, leadDeveloper);
+        var project = new Project("Test Project", service, testers, leadDeveloper);
         var backlog = new Backlog();
         var mockSprintStrategy = new Mock<ISprintStrategy>().Object;
 

@@ -26,12 +26,7 @@ public class DoingBacklogItemState : IBacklogItemState
 
     public void Start()
     {
-        throw new InvalidOperationException("Cannot start a backlog item that is already in progress.");
+        throw new InvalidOperationException("Cannot start a backlog item that is in progress.");
     }
 }
 
-//TODO: Observer pattern
-// Specifieke users notifyen bij state changes
-// In project.cs alle testers pakken en toevoegen aan observers
-
-//Sprint, lijst met testers, lijst met developers

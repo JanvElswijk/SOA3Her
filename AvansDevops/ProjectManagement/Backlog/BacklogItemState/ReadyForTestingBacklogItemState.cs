@@ -33,7 +33,6 @@ public class ReadyForTestingBacklogItemState : IBacklogItemState
             throw new InvalidOperationException("Only testers can start a backlog item that is ready for testing.");
         }
 
-        // Hier zou je logica kunnen toevoegen om de backlog item te markeren als in test
-        _backlogItem.ChangeState(new DoingBacklogItemState(_backlogItem));
+        _backlogItem.ChangeState(new TestingBacklogItemState(_backlogItem));
     }
 }
