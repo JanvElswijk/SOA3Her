@@ -6,7 +6,7 @@ using AvansDevops.ProjectManagement;
 public class DoneBacklogItemStateTests
 {
     private BacklogItem _backlogItem;
-    private DoneBacklogItemState _doneState;
+    private IBacklogItemState _doneState;
 
     [SetUp]
     public void Setup()

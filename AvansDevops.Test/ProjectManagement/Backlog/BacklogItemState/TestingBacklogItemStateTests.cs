@@ -1,62 +1,45 @@
-// using NUnit.Framework;
-// using Moq;
-// using System;
-// using AvansDevops.ProjectManagement;
+using NUnit.Framework;
+using System;
+using AvansDevops.ProjectManagement;
 
-// namespace AvansDevops.Tests.ProjectManagement
-// {
-//     [TestFixture]
-//     public class TestingBacklogItemStateTests
-//     {
-//         private Mock<BacklogItem> _mockBacklogItem;
-//         private Mock<Sprint> _mockSprint;
-//         private TestingBacklogItemState _state;
+[TestFixture]
+public class TestingBacklogItemStateTests
+{
+    private BacklogItem _backlogItem;
+    private IBacklogItemState _doneState;
 
-//         [SetUp]
-//         public void SetUp()
-//         {
-//             _mockBacklogItem = new Mock<BacklogItem>();
-//             _mockSprint = new Mock<Sprint>();
+    [SetUp]
+    public void Setup()
+    {
+        _backlogItem = new BacklogItem("Test", "Desc", 3);
+        _doneState = new TestingBacklogItemState(_backlogItem);
+    }
 
-//             _mockBacklogItem.Setup(b => b.GetSprint()).Returns(_mockSprint.Object);
+    [Test]
+    public void Complete_ThrowsInvalidOperationException()
+    {
+        var ex = Assert.Throws<InvalidOperationException>(() => _doneState.Complete());
+        Assert.That(ex.Message, Is.EqualTo("Cannot complete a backlog item that is already done."));
+    }
 
-//             _state = new TestingBacklogItemState(_mockBacklogItem.Object);
-//         }
+    [Test]
+    public void Approve_ThrowsInvalidOperationException()
+    {
+        var ex = Assert.Throws<InvalidOperationException>(() => _doneState.Approve());
+        Assert.That(ex.Message, Is.EqualTo("Cannot approve a backlog item that is already done."));
+    }
 
-//         [Test]
-//         public void Complete_ThrowsInvalidOperationException()
-//         {
-//             var ex = Assert.Throws<InvalidOperationException>(() => _state.Complete());
-//             Assert.That(ex.Message, Is.EqualTo("Cannot complete a backlog item that is in the Testing state."));
-//         }
+    [Test]
+    public void Reject_ThrowsInvalidOperationException()
+    {
+        var ex = Assert.Throws<InvalidOperationException>(() => _doneState.Reject());
+        Assert.That(ex.Message, Is.EqualTo("Cannot reject a backlog item that is already done."));
+    }
 
-//         [Test]
-//         public void Start_ThrowsInvalidOperationException()
-//         {
-//             var ex = Assert.Throws<InvalidOperationException>(() => _state.Start());
-//             Assert.That(ex.Message, Is.EqualTo("Cannot start a backlog item that is already in the Testing state."));
-//         }
-
-//         [Test]
-//         public void Reject_ChangesStateToTodoAndNotifiesScrumMaster()
-//         {
-//             // Act
-//             _state.Reject();
-
-//             // Assert
-//             _mockBacklogItem.Verify(b => b.ChangeState(It.IsAny<TodoBacklogItemState>()), Times.Once);
-//             _mockSprint.Verify(s => s.NotifyScrumMaster(_mockBacklogItem.Object, 
-//                 "Backlog item has been rejected and moved back to Todo state."), Times.Once);
-//         }
-
-//         [Test]
-//         public void Approve_ChangesStateToTested()
-//         {
-//             // Act
-//             _state.Approve();
-
-//             // Assert
-//             _mockBacklogItem.Verify(b => b.ChangeState(It.IsAny<TestedBacklogItemState>()), Times.Once);
-//         }
-//     }
-// }
+    [Test]
+    public void Start_ThrowsInvalidOperationException()
+    {
+        var ex = Assert.Throws<InvalidOperationException>(() => _doneState.Start());
+        Assert.That(ex.Message, Is.EqualTo("Cannot start a backlog item that is already done."));
+    }
+}

@@ -6,7 +6,7 @@ namespace AvansDevops.Tests.ProjectManagement
     [TestFixture]
     public class NotInSprintBacklogItemStateTests
     {
-        private NotInSprintBacklogItemState _state;
+        private IBacklogItemState _state;
 
         [SetUp]
         public void SetUp()
