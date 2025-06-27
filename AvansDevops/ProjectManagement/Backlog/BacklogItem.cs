@@ -1,0 +1,98 @@
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using AvansDevops.ProjectManagement;
+using AvansDevops.Notifications.Adapter;
+
+public class BacklogItem
+{
+    // private List<INotificationObserver> _observers = new List<INotificationObserver>();
+    private string _title;
+    private string _description;
+    private IBacklogItemState _state;
+    private int _storyPoints;
+    private Sprint? _sprint;
+    private List<BacklogItem> _activities = new List<BacklogItem>();
+
+    private User? _user;
+
+    public BacklogItem(){}
+    public BacklogItem(string title, string description, int storyPoints)
+    {
+        this._title = title;
+        this._description = description;
+        this._state = new NotInSprintBacklogItemState();
+        this._storyPoints = storyPoints;
+    }
+
+
+    //Voeg een item toe aan de sprint en zet de state naar Todo
+    public void SetSprint(Sprint sprint)
+    {
+        ChangeState(new TodoBacklogItemState(this));
+        _sprint = sprint;
+    }
+
+
+    //Notify:
+    //Als een item naar ready for testing gaat -> testers krijgen notificatie
+    //Als een item van readyForTesting naar todo -> scrum master krijgt notificatie
+    //als een item van tested naar readyfortesting gaat -> testers krijgen notificatie
+
+    //verdere notificaties komen aan bod wanneer een sprint eindigt
+
+
+
+    public void ChangeState(IBacklogItemState newState)
+    {
+        this._state = newState;
+    }
+    
+    public void Start()
+    {
+        _state.Start();
+    }
+    public void Complete()
+    {
+        _state.Complete();
+    }
+    public void Reject()
+    {
+        _state.Reject();
+    }
+    public void Approve()
+    {
+        _state.Approve();
+    }
+    
+ 
+
+    public virtual Sprint? GetSprint()
+    {
+        return this._sprint;
+    }
+
+    public void SetUser(User user)
+    {
+        this._user = user;
+    }
+
+    public User? GetUser()
+    {
+        return this._user;
+    }
+
+
+}
+
+
+
+
+//Backlog aanmaken
+//Backlog vullen met backlog items
+
+//Sprint aanmaken
+//Sprint vullen met backlog items
+//items die naar sprint gaan uit backlog halen
+
+//developers, testers, lead developer (scrum master?) toevoegen
+//

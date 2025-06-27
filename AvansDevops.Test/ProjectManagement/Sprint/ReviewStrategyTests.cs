@@ -1,0 +1,50 @@
+using NUnit.Framework;
+using AvansDevops.ProjectManagement;
+using AvansDevops.DevOps;
+using Moq;
+
+[TestFixture]
+public class ReviewStrategyTests
+{
+    [Test]
+    public void Execute_WithNullSummary_ReturnsNull()
+    {
+        // Arrange
+        var pipelineMock = new Mock<Pipeline>();
+        var strategy = new ReviewStrategy();
+
+        // Act
+        var result = strategy.Execute(pipelineMock.Object, null);
+
+        // Assert
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void Execute_WithNullPipeline_ReturnsNull()
+    {
+        // Arrange
+        var strategy = new ReviewStrategy();
+
+        // Act
+        var result = strategy.Execute(null, "summary");
+
+        // Assert
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void Execute_WithValidPipelineAndSummary_ReturnsPipelineResult()
+    {
+        // Arrange
+        var pipelineMock = new Mock<Pipeline>();
+        pipelineMock.Setup(p => p.Execute(It.IsAny<IPipelineVisitor>())).Returns(true);
+        var strategy = new ReviewStrategy();
+
+        // Act
+        var result = strategy.Execute(pipelineMock.Object, "summary");
+
+        // Assert
+        Assert.That(result, Is.True);
+    }
+}

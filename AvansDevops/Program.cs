@@ -1,4 +1,4 @@
-using AvansDevops.DevOps;
+﻿using AvansDevops.DevOps;
 using AvansDevops.DevOps.Analysis;
 using AvansDevops.DevOps.Build;
 using AvansDevops.DevOps.Deploy;
@@ -6,6 +6,9 @@ using AvansDevops.DevOps.Package;
 using AvansDevops.DevOps.Source;
 using AvansDevops.DevOps.Test;
 using AvansDevops.DevOps.Utility;
+using AvansDevops.Notifications;
+using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement;
 
 AnalysisActivity aa = new SonarqubeActivity();
 
@@ -60,19 +63,31 @@ DevOpsPipeline pipeline = builder
     .AddUtilityActivity(ua4)
     .Build();
 
-IPipelineVisitor visitor = new DevOpsPipelineVisitor();
-pipeline.Execute(visitor);
+// IPipelineVisitor visitor = new DevOpsPipelineVisitor();
+// pipeline.Execute(visitor);
 
 
-BacklogItem backlogItem = new BacklogItem("Implement Observer Pattern", "Implement the observer pattern in the project management system.", "In Progress", 5);
+BacklogItem backlogItem = new BacklogItem("Implement Observer Pattern", "Implement the observer pattern in the project management system.", 5);
 
 NotificationService notificationService = new NotificationService(new EmailAdapter());
 notificationService.AddNotificationAdapter(new EmailAdapter()); //wont add
 notificationService.AddNotificationAdapter(new SlackAdapter());
 
-backlogItem.AddObserver(notificationService);
-backlogItem.NotifyObservers("Testing Rejected, sent back to TODO");
 
+User developer = new User("Alice", "alice@mail.com", UserRole.Developer);
+User leadDeveloper = new User("Bob", "bob@mail.com", UserRole.LeadDeveloper);
+User scrumMaster = new User("Charlie", "charlie@mail.com", UserRole.ScrumMaster);
+User tester = new User("Dave", "dave@mail.com", UserRole.Tester);
+User productOwner = new User("Eve", "eve@mail.com", UserRole.ProductOwner);
+
+
+// Sprint sprint = new Sprint(new Backlog(), leadDeveloper, new List<User> { tester }, productOwner, scrumMaster, new ReviewStrategy(), pipeline);
+
+
+Project project = new Project("Project Management System", new SCMService(new GitAdapter()), new List<User> { developer, leadDeveloper, scrumMaster, tester }, productOwner);
+project.AddBacklogItem(backlogItem);
+project.StartNewSprint(leadDeveloper, new List<User> { tester }, scrumMaster, new ReviewStrategy(), null);
+project.MoveBacklogItemToSprint(backlogItem);
 
 SCMService _SCMService = new SCMService(new GitAdapter());
 _SCMService.CreateBranch("feature/observer-pattern");
@@ -80,3 +95,11 @@ _SCMService.Commit("Implement observer pattern in project management system.");
 _SCMService.Push();
 _SCMService.Pull();
 
+backlogItem.SetUser(developer);
+backlogItem.Start(); //todo -> doing
+backlogItem.Complete(); //todo -> ready for testing //notify dave
+
+project._currentSprint.SetSummary("okay");
+project.FinishSprint();
+// sprint.SetSummary("Okay");
+// sprint.ExecuteStrategy();
