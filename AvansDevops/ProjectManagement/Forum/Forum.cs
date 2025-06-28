@@ -1,6 +1,39 @@
+namespace AvansDevops.ProjectManagement.Forum;
+
 public class Forum
 {
-    private List<Thread> threads;
+    private List<MessageThread> _threads = new();
+
+    public void CreateThread(BacklogItem backlogItem) {
+        if (backlogItem == null)
+        {
+            throw new ArgumentNullException(nameof(backlogItem), "Backlog item cannot be null.");
+        }
+        
+        if (_threads.Any(t => t.BacklogItem == backlogItem))
+        {
+            throw new InvalidOperationException("A thread for this backlog item already exists.");
+        }
+        
+        var newThread = new MessageThread(backlogItem);
+        _threads.Add(newThread);
+    }
+    
+    public MessageThread GetThreadByBacklogItem(BacklogItem backlogItem)
+    {
+        if (backlogItem == null)
+        {
+            throw new ArgumentNullException(nameof(backlogItem), "Backlog item cannot be null.");
+        }
+        
+        var thread = _threads.FirstOrDefault(t => t.BacklogItem == backlogItem);
+        if (thread == null)
+        {
+            throw new InvalidOperationException("No thread found for the specified backlog item.");
+        }
+        
+        return thread;
+    }
 }
 
 
