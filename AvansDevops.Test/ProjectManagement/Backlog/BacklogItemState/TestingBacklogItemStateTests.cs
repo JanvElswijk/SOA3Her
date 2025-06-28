@@ -25,6 +25,8 @@ public class TestingBacklogItemStateTests
         var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
         _backlogItem.SetSprint(sprint);
 
+        
+
         _testingState = new TestingBacklogItemState(_backlogItem);
     }
 
@@ -41,8 +43,9 @@ public class TestingBacklogItemStateTests
            var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
         _backlogItem.SetUser(developer);
         
+        
         // Assert
-         Assert.DoesNotThrow(() => _testingState.Approve());
+        Assert.DoesNotThrow(() => _testingState.Approve());
         Assert.That(_backlogItem._state, Is.InstanceOf<TestedBacklogItemState>());
 
     }
@@ -53,8 +56,10 @@ public class TestingBacklogItemStateTests
     {
            var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
         _backlogItem.SetUser(developer);
-        
+
         // Assert
+        Assert.DoesNotThrow(() => _testingState.Reject());
+
         Assert.That(_backlogItem._state, Is.InstanceOf<TodoBacklogItemState>());
  
     }

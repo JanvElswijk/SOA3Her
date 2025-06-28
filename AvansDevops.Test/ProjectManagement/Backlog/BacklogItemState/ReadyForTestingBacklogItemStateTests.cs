@@ -15,17 +15,6 @@ public class ReadyForTestingBacklogItemStateTests
     {
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
-        var project = new Project("Test Project", null, new List<User>(), null);
-        var backlog = new Backlog();
-        backlog.AddBacklogItem(_backlogItem);
-        var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
-        var testers = new List<User>();
-        var scrumMaster = new User("Scrum", "scrum@test.com", UserRole.ScrumMaster);
-        var mockStrategy = new Mock<ISprintStrategy>();
-
-        var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
-        _backlogItem.SetSprint(sprint);
-
         _readyForTestingState = new ReadyForTestingBacklogItemState(_backlogItem);
     }
 
