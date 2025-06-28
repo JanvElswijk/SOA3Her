@@ -41,7 +41,10 @@ public class BacklogItem
 
     //verdere notificaties komen aan bod wanneer een sprint eindigt
 
-
+    public void AddActivity(BacklogItem activity)
+    {
+        _activities.Add(activity);
+    }
 
     public void ChangeState(IBacklogItemState newState)
     {
