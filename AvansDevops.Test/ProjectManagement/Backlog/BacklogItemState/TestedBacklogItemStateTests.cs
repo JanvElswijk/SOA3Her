@@ -47,7 +47,7 @@ public class TestedBacklogItemStateTests
     
         // Assert
         Assert.DoesNotThrow(() => _testedState.Approve());
-        Assert.That(_backlogItem._state, Is.InstanceOf<DoneBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<DoneBacklogItemState>());
 
     }
 
@@ -60,7 +60,7 @@ public class TestedBacklogItemStateTests
         
         // Assert
         Assert.DoesNotThrow(() => _testedState.Reject());
-        Assert.That(_backlogItem._state, Is.InstanceOf<ReadyForTestingBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<ReadyForTestingBacklogItemState>());
 
     }
 

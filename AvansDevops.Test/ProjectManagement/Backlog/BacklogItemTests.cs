@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using AvansDevops.ProjectManagement;
 using Moq;
+using AvansDevops.ProjectManagement.Sprint;
 
 [TestFixture]
     public class BacklogItemTestsTest
@@ -24,7 +25,7 @@ using Moq;
             item.SetSprint(sprint);
 
             Assert.That(sprint, Is.EqualTo(item.GetSprint()));
-            Assert.That(item._state, Is.InstanceOf<TodoBacklogItemState>());
+            Assert.That(item.State, Is.InstanceOf<TodoBacklogItemState>());
         }
 
  
@@ -37,7 +38,7 @@ using Moq;
 
             item.ChangeState(newState);
 
-            Assert.That(newState, Is.EqualTo(item._state));
+            Assert.That(newState, Is.EqualTo(item.State));
         }
 
         [Test]

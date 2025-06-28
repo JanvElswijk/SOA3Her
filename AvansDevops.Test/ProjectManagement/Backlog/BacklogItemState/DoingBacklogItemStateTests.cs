@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
 using Moq;
+using AvansDevops.ProjectManagement.Project;
+using AvansDevops.ProjectManagement.Sprint;
 
 [TestFixture]
 public class DoingBacklogItemStateTests
@@ -17,6 +19,16 @@ public class DoingBacklogItemStateTests
     {
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
+   var project = new Project("Test Project", null, new List<User>(), null);
+        var backlog = new Backlog();
+        backlog.AddBacklogItem(_backlogItem);
+        var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
+        var testers = new List<User>();
+        var scrumMaster = new User("Scrum", "scrum@test.com", UserRole.ScrumMaster);
+        var mockStrategy = new Mock<ISprintStrategy>();
+
+        var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
+        _backlogItem.SetSprint(sprint);
 
         _doneState = new DoingBacklogItemState(_backlogItem);
     }
@@ -28,7 +40,7 @@ public class DoingBacklogItemStateTests
         Assert.DoesNotThrow(() => _doneState.Complete());
 
         // Assert
-        Assert.That(_backlogItem._state, Is.InstanceOf<ReadyForTestingBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<ReadyForTestingBacklogItemState>());
     }
 
 

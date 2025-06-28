@@ -49,6 +49,6 @@ public class ReadyForTestingBacklogItemStateTests
         Assert.DoesNotThrow(() => _readyForTestingState.Start());
 
         // Assert
-        Assert.That(_backlogItem._state, Is.InstanceOf<TestingBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<TestingBacklogItemState>());
     }
 }

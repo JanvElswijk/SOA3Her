@@ -55,7 +55,7 @@ public class TodoBacklogItemStateTests
 
         Assert.DoesNotThrow(() => _todoState.Start());
         // Assert
-        Assert.That(_backlogItem._state, Is.InstanceOf<DoingBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<DoingBacklogItemState>());
 
     }
 }

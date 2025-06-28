@@ -2,6 +2,9 @@ using NUnit.Framework;
 using System;
 using AvansDevops.ProjectManagement;
 using Moq;
+using AvansDevops.ProjectManagement.Project;
+using AvansDevops.ProjectManagement.Sprint;
+
 
 [TestFixture]
 public class TestingBacklogItemStateTests
@@ -9,9 +12,16 @@ public class TestingBacklogItemStateTests
     private BacklogItem _backlogItem;
     private IBacklogItemState _testingState;
 
+    private TextWriter _originalConsoleOut;
+    private StringWriter _consoleOutput;
+
     [SetUp]
     public void Setup()
     {
+        _originalConsoleOut = Console.Out;
+        _consoleOutput = new StringWriter();
+        Console.SetOut(_consoleOutput);
+
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
         var project = new Project("Test Project", null, new List<User>(), null);
@@ -25,9 +35,14 @@ public class TestingBacklogItemStateTests
         var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
         _backlogItem.SetSprint(sprint);
 
-        
-
         _testingState = new TestingBacklogItemState(_backlogItem);
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Console.SetOut(_originalConsoleOut);
+        _consoleOutput.Dispose();
     }
 
     [Test]
@@ -46,7 +61,7 @@ public class TestingBacklogItemStateTests
         
         // Assert
         Assert.DoesNotThrow(() => _testingState.Approve());
-        Assert.That(_backlogItem._state, Is.InstanceOf<TestedBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<TestedBacklogItemState>());
 
     }
 
@@ -60,7 +75,7 @@ public class TestingBacklogItemStateTests
         // Assert
         Assert.DoesNotThrow(() => _testingState.Reject());
 
-        Assert.That(_backlogItem._state, Is.InstanceOf<TodoBacklogItemState>());
+        Assert.That(_backlogItem.State, Is.InstanceOf<TodoBacklogItemState>());
  
     }
 
