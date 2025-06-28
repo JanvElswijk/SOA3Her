@@ -2,26 +2,27 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AvansDevops.ProjectManagement;
 using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement.Sprint;
 
 public class BacklogItem
 {
     // private List<INotificationObserver> _observers = new List<INotificationObserver>();
-    private string _title;
+    public string Title;
     private string _description;
-    private IBacklogItemState _state;
-    private int _storyPoints;
+    public IBacklogItemState State;
+    public int StoryPoints;
     private Sprint? _sprint;
     private List<BacklogItem> _activities = new List<BacklogItem>();
 
-    private User? _user;
+    public User? User;
 
     public BacklogItem(){}
     public BacklogItem(string title, string description, int storyPoints)
     {
-        this._title = title;
+        this.Title = title;
         this._description = description;
-        this._state = new NotInSprintBacklogItemState();
-        this._storyPoints = storyPoints;
+        this.State = new NotInSprintBacklogItemState();
+        this.StoryPoints = storyPoints;
     }
 
 
@@ -44,24 +45,24 @@ public class BacklogItem
 
     public void ChangeState(IBacklogItemState newState)
     {
-        this._state = newState;
+        this.State = newState;
     }
     
     public void Start()
     {
-        _state.Start();
+        State.Start();
     }
     public void Complete()
     {
-        _state.Complete();
+        State.Complete();
     }
     public void Reject()
     {
-        _state.Reject();
+        State.Reject();
     }
     public void Approve()
     {
-        _state.Approve();
+        State.Approve();
     }
     
  
@@ -73,12 +74,12 @@ public class BacklogItem
 
     public void SetUser(User user)
     {
-        this._user = user;
+        this.User = user;
     }
 
     public User? GetUser()
     {
-        return this._user;
+        return this.User;
     }
 
 
