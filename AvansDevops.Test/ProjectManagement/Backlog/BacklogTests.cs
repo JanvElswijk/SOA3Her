@@ -7,7 +7,17 @@ using AvansDevops.ProjectManagement;
 [TestFixture]
 public class BacklogTests
 {
-    
+    [Test] 
+    public void Constructor_InitializesEmptyBacklog()
+    {
+        // Arrange & Act
+        var backlog = new Backlog();
+
+        // Assert
+        Assert.That(backlog._items, Is.Not.Null);
+        Assert.That(backlog._items, Is.Empty);
+    }
+
     [Test]
     public void AddBacklogItem_AddsItem_WhenNotExists()
     {

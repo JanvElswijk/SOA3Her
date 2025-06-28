@@ -19,7 +19,7 @@ public class DoingBacklogItemStateTests
     {
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
-   var project = new Project("Test Project", null, new List<User>(), null);
+        var project = new Project("Test Project", null, new List<User>(), null);
         var backlog = new Backlog();
         backlog.AddBacklogItem(_backlogItem);
         var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
