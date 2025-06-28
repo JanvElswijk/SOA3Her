@@ -1,23 +1,30 @@
 using AvansDevops.DevOps;
+using AvansDevops.ProjectManagement.Forum;
 
 namespace AvansDevops.ProjectManagement.Project;
 public class Project
 {
     public string Title;
-    private Backlog _backlog;
+    public Backlog _backlog;
     private SCMService _scmService;
     public List<User> Developers; //In project is het algemeen, in sprint specificeer je wie scrumMaster, leadDeveloper, testers zijn
     public User _productOwner;
-    //private Forum forum;
+    public Forum.Forum _forum;
     public Sprint.Sprint _currentSprint { get; private set; } //Current sprint, kan null zijn als er geen sprint is;
 
     public Project(string title, SCMService scmService, List<User> developers, User productOwner)
     {
+        _forum = new Forum.Forum();
         Title = title;
         _backlog = new Backlog();
         _scmService = scmService;
         Developers = developers;
         _productOwner = productOwner;
+    }
+
+    public void AddThread(BacklogItem backlogItem)
+    {
+        _forum.CreateThread(backlogItem); 
     }
 
     public void AddBacklogItem(BacklogItem item)
@@ -41,7 +48,7 @@ public class Project
     public void FinishSprint()
     {
         _currentSprint.ExecuteStrategy();
-        _currentSprint = null; // Reset current sprint after finishing
+        _currentSprint = null; 
     }
 
     public void MoveBacklogItemToSprint(BacklogItem item)

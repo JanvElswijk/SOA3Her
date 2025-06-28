@@ -2,7 +2,7 @@ namespace AvansDevops.ProjectManagement.Forum;
 
 public class Forum
 {
-    private List<MessageThread> _threads = new();
+    public List<MessageThread> _threads = new();
 
     public void CreateThread(BacklogItem backlogItem) {
         if (backlogItem == null)
