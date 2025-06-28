@@ -1,10 +1,8 @@
-
 using AvansDevops.DevOps;
 using AvansDevops.Notifications.Adapter;
-using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Reporting;
 
-
-namespace AvansDevops.ProjectManagement;
+namespace AvansDevops.ProjectManagement.Sprint;
 public class Sprint 
 {
     public Backlog _backlogItems { get; private set; }
@@ -14,7 +12,8 @@ public class Sprint
     private ISprintStrategy _strategy;
     private Pipeline _pipeline;
     private string _summary;
-    private Project _project;
+    public Project.Project Project;
+    public Report Report;
 
     private List<INotificationObserver> _observers = new List<INotificationObserver>();
 
@@ -23,9 +22,9 @@ public class Sprint
         
     }
 
-    public Sprint(Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
+    public Sprint(Project.Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
     {
-        _project = project;
+        Project = project;
         _strategy = strategy;
         _backlogItems = backlogItems;
         foreach (var backlogItem in _backlogItems._items)
@@ -43,7 +42,7 @@ public class Sprint
 
         //add observers
         _observers.Add(_scrumMaster);
-        _observers.Add(_project._productOwner);
+        _observers.Add(Project._productOwner);
         _observers.AddRange(_testers);
     }
 
