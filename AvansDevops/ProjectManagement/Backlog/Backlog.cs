@@ -2,9 +2,7 @@ namespace AvansDevops.ProjectManagement;
 public class Backlog
 {
     public List<BacklogItem> _items;
-
-
-
+    
     public Backlog()
     {
         _items = new List<BacklogItem>();
