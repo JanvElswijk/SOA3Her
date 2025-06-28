@@ -14,18 +14,6 @@ public class TestedBacklogItemStateTests
     public void Setup()
     {
         _backlogItem = new BacklogItem("Test", "Desc", 3);
-
-        var project = new Project("Test Project", null, new List<User>(), null);
-        var backlog = new Backlog();
-        backlog.AddBacklogItem(_backlogItem);
-        var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
-        var testers = new List<User>();
-        var scrumMaster = new User("Scrum", "scrum@test.com", UserRole.ScrumMaster);
-        var mockStrategy = new Mock<ISprintStrategy>();
-
-        var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
-        _backlogItem.SetSprint(sprint);
-
         _testedState = new TestedBacklogItemState(_backlogItem);
     }
 
@@ -50,11 +38,24 @@ public class TestedBacklogItemStateTests
         Assert.That(ex.Message, Is.EqualTo("Only lead developers can reject a backlog item that is tested."));
     }
 
+    [Test]
+    public void Approve_ChangesStateToTodo()
+    {
+        // Arrange
+        var leadDev = new User("Lead", "lead@mail.com", UserRole.LeadDeveloper);
+        _backlogItem.SetUser(leadDev);
+    
+        // Assert
+        Assert.DoesNotThrow(() => _testedState.Approve());
+        Assert.That(_backlogItem._state, Is.InstanceOf<DoneBacklogItemState>());
+
+    }
+
 
     [Test]
     public void Reject_ChangesStateToTodo()
     {
-           var developer = new User("Dev", "dev@mail.com", UserRole.LeadDeveloper);
+        var developer = new User("Dev", "dev@mail.com", UserRole.LeadDeveloper);
         _backlogItem.SetUser(developer);
         
         // Assert

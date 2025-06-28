@@ -26,7 +26,7 @@ public class BacklogTests
     public void AddBacklogItem_Throws_WhenItemAlreadyExists()
     {
         // Arrange
-                     var backlog = new Backlog();
+        var backlog = new Backlog();
 
         var item = new BacklogItem("Test", "desc", 1);
         backlog.AddBacklogItem(item);
