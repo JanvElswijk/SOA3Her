@@ -10,7 +10,7 @@ public class GitHubActivityTests
     public void GetSourceCodeShouldReturnTrue()
     {
         // Arrange
-        var activity = new GitLabActivity("github.com/repository/test");
+        var activity = new GitHubActivity("github.com/repository/test");
 
         // Act
         var result = activity.GetSourceCode();

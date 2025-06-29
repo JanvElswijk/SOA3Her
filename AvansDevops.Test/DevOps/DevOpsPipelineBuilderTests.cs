@@ -162,5 +162,5 @@ public class DevOpsPipelineBuilderTests {
         Assert.That(pipeline.GetActivities().Contains(activity2.Object), Is.True);
         Assert.That(pipeline.GetActivities().Contains(activity3.Object), Is.True);
     }
-    
+
 }

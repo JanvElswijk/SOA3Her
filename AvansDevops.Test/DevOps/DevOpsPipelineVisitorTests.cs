@@ -145,37 +145,4 @@ public class DevOpsPipelineVisitorTests {
         // Assert
         utilityActivity.Verify(u => u.RunUtility(), Times.Once);
     }
-    
-    [Test]
-    public void VisitPipeline_ShouldHandleMultipleActivities() {
-        // Arrange
-        var analyzeActivity = new Mock<AnalysisActivity>();
-        var buildActivity = new Mock<BuildActivity>();
-        var testActivity = new Mock<TestActivity>(true, "publish.com");
-        var deployActivity = new Mock<DeployActivity>("deploy.com");
-        var packageActivity = new Mock<PackageActivity>("package.com");
-        var sourceActivity = new Mock<SourceActivity>("source.com");
-        var utilityActivity = new Mock<UtilityActivity>();
-        
-        
-        var visitor = new DevOpsPipelineVisitor();
-        
-        // Act
-        visitor.VisitAnalysisActivity(analyzeActivity.Object);
-        visitor.VisitBuildActivity(buildActivity.Object);
-        visitor.VisitTestActivity(testActivity.Object);
-        visitor.VisitDeployActivity(deployActivity.Object);
-        visitor.VisitPackageActivity(packageActivity.Object);
-        visitor.VisitSourceActivity(sourceActivity.Object);
-        visitor.VisitUtilityActivity(utilityActivity.Object);
-        
-        // Assert
-        analyzeActivity.Verify(a => a.Analyze(), Times.Once);
-        buildActivity.Verify(b => b.Build(), Times.Once);
-        testActivity.Verify(t => t.RunTests(), Times.Once);
-        deployActivity.Verify(d => d.Deploy(), Times.Once);
-        packageActivity.Verify(p => p.GetPackage(), Times.Once);
-        sourceActivity.Verify(s => s.GetSourceCode(), Times.Once);
-        utilityActivity.Verify(u => u.RunUtility(), Times.Once);
-    }
 }

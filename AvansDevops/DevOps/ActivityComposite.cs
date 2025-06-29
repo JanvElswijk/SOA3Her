@@ -19,9 +19,4 @@ public class ActivityComposite : Activity {
     public void AddAll(IEnumerable<Activity> activities) {
         Activities.AddRange(activities);
     }
-    
-    public Activity GetChild(int index) {
-        // TODO: Error handling for index out of range
-        return Activities[index];
-    }
 }
