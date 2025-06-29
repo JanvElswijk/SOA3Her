@@ -203,7 +203,7 @@ public class SprintTests
         Assert.That(sprint.GetObservers().Count, Is.EqualTo(4)); // Scrum Master, Product Owner, Tester1, Tester2
     }
 
-    [Test] //TODO; dubbelcheck
+    [Test] 
     public void NotifyObservers_CallsUpdateOnAllObservers()
     {
         // Arrange

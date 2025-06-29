@@ -6,6 +6,13 @@ using Moq;
 [TestFixture]
 public class ReviewStrategyTests
 {
+
+    [SetUp]
+    public void Setup()
+    {
+        Console.SetOut(new System.IO.StringWriter());
+    }
+    
     [Test]
     public void Execute_WithNullSummary_ReturnsNull()
     {
