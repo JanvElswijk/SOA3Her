@@ -5,7 +5,7 @@ namespace AvansDevops.ProjectManagement.Forum;
 public class MessageThread
 {
     public BacklogItem BacklogItem;
-    private Dictionary<int, Message> _messages;
+    public Dictionary<int, Message> _messages;
     private bool _locked = false;
     
     public MessageThread(BacklogItem backlogItem)

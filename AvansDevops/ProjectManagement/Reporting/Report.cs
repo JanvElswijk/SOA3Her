@@ -28,7 +28,7 @@ public class Report {
         }
     }
 
-    public void Setup() {
+    private void Setup() {
         foreach (var user in _sprint.Project.Developers) {
             foreach (BacklogItem b in _sprint._backlogItems._items) {
                 if (b.User! == user && b.StoryPoints > 0 && b.State is DoneBacklogItemState) {

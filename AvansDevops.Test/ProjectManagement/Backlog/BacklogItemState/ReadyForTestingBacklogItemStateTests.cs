@@ -38,6 +38,17 @@ public class ReadyForTestingBacklogItemStateTests
         var ex = Assert.Throws<InvalidOperationException>(() => _readyForTestingState.Reject());
         Assert.That(ex.Message, Is.EqualTo("Cannot reject a backlog item that is ready for testing."));
     }
+
+    [Test] 
+    public void Start_ThrowsInvalidOperationException_WhenNoTesterAssigned()
+    {
+                // Arrange
+        var user = new User("Developer", "dev@mail.com", UserRole.Developer);
+        _backlogItem.SetUser(user);
+
+        var ex = Assert.Throws<InvalidOperationException>(() => _readyForTestingState.Start());
+        Assert.That(ex.Message, Is.EqualTo("Only testers can start a backlog item that is ready for testing."));
+    }
     
 
     [Test]

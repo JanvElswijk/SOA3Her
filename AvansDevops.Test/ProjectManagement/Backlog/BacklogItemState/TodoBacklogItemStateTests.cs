@@ -45,6 +45,16 @@ public class TodoBacklogItemStateTests
     }
 
     [Test]
+    public void Start_WithNonDeveloperUser_ThrowsException()
+    {
+        // Arrange
+        var user = new User("Tester", "test@mail.com", UserRole.Tester);
+        _backlogItem.SetUser(user);
+        var ex = Assert.Throws<InvalidOperationException>(() => _todoState.Start());
+        Assert.That(ex.Message, Is.EqualTo("Only developers can start a backlog item in the Todo state."));
+    }
+
+    [Test]
     public void Start_ChangesStateToDoing()
     {
 
