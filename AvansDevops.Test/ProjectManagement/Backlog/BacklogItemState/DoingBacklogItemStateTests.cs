@@ -1,12 +1,11 @@
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
-using Moq;
 using AvansDevops.ProjectManagement.Project;
 using AvansDevops.ProjectManagement.Sprint;
+using Moq;
+
+namespace AvansDevops.Test.ProjectManagement.Backlog.BacklogItemState;
 
 [TestFixture]
 public class DoingBacklogItemStateTests
@@ -21,21 +20,21 @@ public class DoingBacklogItemStateTests
     {
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
-        var project = new Project("Test Project", null, new List<User>(), null);
-        var backlog = new Backlog();
+        var project = new AvansDevops.ProjectManagement.Project.Project("Test Project", null, new List<User>(), null);
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
         backlog.AddBacklogItem(_backlogItem);
         var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
         var testers = new List<User>();
         var scrumMaster = new User("Scrum", "scrum@test.com", UserRole.ScrumMaster);
         var mockStrategy = new Mock<ISprintStrategy>();
 
-        var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
+        var sprint = new AvansDevops.ProjectManagement.Sprint.Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
         _backlogItem.SetSprint(sprint);
 
         _doneState = new DoingBacklogItemState(_backlogItem);
     }
 
-        [Test]
+    [Test]
     public void Complete_ChangesStateToReadyForTesting()
     {
         // Act

@@ -4,6 +4,8 @@ using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using Moq;
 
+namespace AvansDevops.Test.Notifications;
+
 [TestFixture]
 public class NotificationServiceTests
 {

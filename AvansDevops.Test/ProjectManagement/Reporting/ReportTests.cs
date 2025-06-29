@@ -1,109 +1,216 @@
-﻿// using System;
-// using System.Collections.Generic;
-// using System.IO;
-// using AvansDevops.ProjectManagement;
-// using AvansDevops.ProjectManagement.Project;
-// using Moq;
-// using AvansDevops.ProjectManagement.Reporting;
-// using AvansDevops.ProjectManagement.Sprint;
-//
-// namespace AvansDevops.Test.ProjectManagement.Reporting
-// {
-//     [TestFixture]
-//     public class ReportTests
-//     {
-//         private Mock<Sprint> _mockSprint;
-//         private Mock<Project> _mockProject;
-//         private Mock<User> _mockUser1;
-//         private Mock<User> _mockUser2;
-//         private List<BacklogItem> _backlogItems;
-//         private BacklogItem _backlogItemsWrapper;
-//
-//         [SetUp]
-//         public void SetUp()
-//         {
-//             _mockSprint = new Mock<Sprint>();
-//             _mockProject = new Mock<Project>();
-//             _mockUser1 = new Mock<User>();
-//             _mockUser2 = new Mock<User>();
-//
-//             _mockUser1.Setup(u => u.Name).Returns("Alice");
-//             _mockUser2.Setup(u => u.Name).Returns("Bob");
-//
-//             _mockSprint.Setup(s => s.Project).Returns(_mockProject.Object);
-//             _mockSprint.Setup(s => s._backlogItems).Returns(new Backlog { _items = new List<BacklogItem>() });
-//
-//             _backlogItems = new List<BacklogItem>
-//             {
-//                 new BacklogItem("Item 1", "Description for Item 1", 5),
-//                 new BacklogItem("Item 2", "Description for Item 2", 3),
-//                 new BacklogItem("Item 3", "Description for Item 3", 2)
-//             };
-//
-//             _backlogItems[0].SetUser(_mockUser1.Object);
-//             _backlogItems[1].SetUser(_mockUser2.Object);
-//             _backlogItems[2].SetUser(_mockUser1.Object);
-//             
-//             foreach (var item in _backlogItems)
-//             {
-//                 _mockSprint.Object._backlogItems._items.Add(item);
-//             }
-//             
-//             _backlogItems[0].ChangeState(new DoneBacklogItemState(_backlogItems[0]));
-//             _backlogItems[1].ChangeState(new DoneBacklogItemState(_backlogItems[1]));
-//             _backlogItems[2].ChangeState(new TodoBacklogItemState(_backlogItems[2]));
-//             
-//             _mockProject.Setup(p => p.Title).Returns("Sprint Test Project");
-//         }
-//
-//         [Test]
-//         public void Generate_ShouldIncludeTeamPointsAndBacklogItems()
-//         {
-//             // Arrange
-//             var report = new Report(_mockSprint.Object);
-//
-//             // Act
-//             var result = report.Generate();
-//
-//             // Assert
-//             Assert.That(result, Does.Contain("Alice: 5 points"));
-//             Assert.That(result, Does.Contain("Bob: 3 points"));
-//             Assert.That(result, Does.Contain("Item 1"));
-//             Assert.That(result, Does.Contain("Item 2"));
-//             Assert.That(result, Does.Contain("Item 3"));
-//             Assert.That(result, Does.Contain("Sprint Report for Sprint Test Project"));
-//         }
-//
-//         [Test]
-//         public void SaveToFile_ShouldWriteTextFile()
-//         {
-//             // Arrange
-//             var tempFile = Path.GetTempFileName();
-//             var content = "Test Report Content";
-//
-//             // Act
-//             Report.SaveToFile(content, tempFile, ReportFormat.Text);
-//
-//             // Assert
-//             var fileContent = File.ReadAllText(tempFile);
-//             Assert.That(fileContent, Is.EqualTo(content));
-//
-//             File.Delete(tempFile);
-//         }
-//
-//         [Test]
-//         public void SaveToFile_WithPdfOrPng_ShouldWriteTextFile()
-//         {
-//             var tempFile = Path.GetTempFileName();
-//             var content = "Test PDF/PNG Content";
-//
-//             Report.SaveToFile(content, tempFile, ReportFormat.Pdf);
-//             Assert.That(File.ReadAllText(tempFile), Is.EqualTo(content));
-//
-//             Report.SaveToFile(content, tempFile, ReportFormat.Png);
-//             Assert.That(File.ReadAllText(tempFile), Is.EqualTo(content));
-//
-//             File.Delete(tempFile);
-//         }
-//     }
-// }
+using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+using AvansDevops.ProjectManagement.Reporting;
+using AvansDevops.ProjectManagement.Sprint;
+using AvansDevops.SCM;
+using AvansDevops.SCM.Adapter;
+using Moq;
+
+namespace AvansDevops.Test.ProjectManagement.Reporting;
+
+[TestFixture]
+public class ReportTests
+{
+    private AvansDevops.ProjectManagement.Sprint.Sprint _sprint;
+    private User _developer;
+    private BacklogItem _backlogItem;
+    private AvansDevops.ProjectManagement.Backlog.Backlog _backlog;
+
+
+
+    [SetUp]
+    public void SetUp()
+    {
+        // Create test data
+        _developer = new User("Dev1", "dev1@example.com", UserRole.Developer);
+        var developers = new List<User> { _developer };
+        var productOwner = new User("PO", "po@example.com", UserRole.ProductOwner);
+        
+        var mockAdapter = new Mock<ISCMAdapter>();
+        var scmService = new SCMService(mockAdapter.Object);
+        var project = new AvansDevops.ProjectManagement.Project.Project("Test Project", scmService, developers, productOwner);
+        
+        _backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
+        _backlogItem = new BacklogItem("Test Item", "Description", 5);
+        _backlogItem.SetUser(_developer);
+        _backlogItem.ChangeState(new TodoBacklogItemState(_backlogItem));
+        _backlog.AddBacklogItem(_backlogItem);
+
+        
+        // _backlogItem.ChangeState(new DoneBacklogItemState(_backlogItem)); // Set item to done for testing
+
+
+
+        var leadDev = new User("Lead", "lead@example.com", UserRole.LeadDeveloper);
+        var testers = new List<User>();
+        var scrumMaster = new User("SM", "sm@example.com", UserRole.ScrumMaster);
+        var strategy = new Mock<ISprintStrategy>().Object;
+
+        _sprint = new AvansDevops.ProjectManagement.Sprint.Sprint(project, _backlog, leadDev, testers, scrumMaster, strategy, null);
+    }
+
+    // Constructor Tests (CC = 1 each)
+    [Test]
+    public void Constructor_WithSprint_InitializesCorrectly()
+    {
+        // Act
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint);
+
+        // Assert
+        Assert.That(report, Is.Not.Null);
+    }
+
+    [Test]
+    public void Constructor_WithSprintAndTemplate_InitializesCorrectly()
+    {
+        // Arrange
+        var template = new ReportTemplate("Header", "Footer");
+
+        // Act
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint, template);
+
+        // Assert
+        Assert.That(report, Is.Not.Null);
+    }
+
+    // Setup Tests (CC = 3) - Tests the nested loops and conditions
+    [Test]
+    public void Setup_WithDoneBacklogItems_CalculatesPointsCorrectly()
+    {
+        // Arrange
+        _backlogItem.ChangeState(new DoneBacklogItemState(_backlogItem)); // Set item to done
+
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint);
+
+
+        // Act
+        var result = report.Generate();
+
+
+
+        // Assert
+        Assert.That(result, Does.Contain("Dev1: 5 points"));
+    }
+
+    [Test]
+    public void Setup_WithNonDoneBacklogItems_DoesNotCountPoints()
+    {
+        // Arrange
+        _backlogItem.ChangeState(new TodoBacklogItemState(_backlogItem));
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint);
+
+        // Act
+        var result = report.Generate();
+
+        // Assert
+        Assert.That(result, Does.Contain("Dev1: 0 points"));
+    }
+
+    // Generate Tests (CC = 2) - Tests the Logo condition
+    [Test]
+    public void Generate_WithoutLogo_GeneratesReportWithoutLogo()
+    {
+        // Arrange
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint);
+
+        // Act
+        var result = report.Generate();
+
+        // Assert
+        Assert.That(result, Does.Contain("Test Project"));
+        Assert.That(result, Does.Contain("Team Members and Points Earned:"));
+        Assert.That(result, Does.Not.Contain("Logo:"));
+    }
+
+    [Test]
+    public void Generate_WithLogo_GeneratesReportWithLogo()
+    {
+        // Arrange
+        var template = new ReportTemplate("Header", "Footer") { Logo = "TestLogo" };
+        var report = new AvansDevops.ProjectManagement.Reporting.Report(_sprint, template);
+
+        // Act
+        var result = report.Generate();
+
+        // Assert
+        Assert.That(result, Does.Contain("Logo: TestLogo"));
+    }
+
+    // SaveToFile Tests (CC = 4) - Tests all switch cases
+    [Test]
+    public void SaveToFile_WithTextFormat_SavesFile()
+    {
+        // Arrange
+        string tempFile = Path.GetTempFileName();
+        string content = "Test report content";
+
+        try
+        {
+            // Act
+            AvansDevops.ProjectManagement.Reporting.Report.SaveToFile(content, tempFile, ReportFormat.Text);
+
+            // Assert
+            Assert.That(File.Exists(tempFile), Is.True);
+            Assert.That(File.ReadAllText(tempFile), Is.EqualTo(content));
+        }
+        finally
+        {
+            if (File.Exists(tempFile)) File.Delete(tempFile);
+        }
+    }
+
+    [Test]
+    public void SaveToFile_WithPdfFormat_SavesAsText()
+    {
+        // Arrange
+        var output = new StringWriter();
+        Console.SetOut(output);
+
+        string tempFile = Path.GetTempFileName();
+        string content = "Test report content";
+
+        try
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => AvansDevops.ProjectManagement.Reporting.Report.SaveToFile(content, tempFile, ReportFormat.Pdf));
+            Assert.That(File.Exists(tempFile), Is.True);
+        }
+        finally
+        {
+            if (File.Exists(tempFile)) File.Delete(tempFile);
+        }
+
+        output.Close();
+    }
+
+    [Test]
+    public void SaveToFile_WithPngFormat_SavesAsText()
+    {
+        // Arrange
+        var output = new StringWriter();
+        Console.SetOut(output);
+        string tempFile = Path.GetTempFileName();
+        string content = "Test report content";
+
+        try
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => AvansDevops.ProjectManagement.Reporting.Report.SaveToFile(content, tempFile, ReportFormat.Png));
+            Assert.That(File.Exists(tempFile), Is.True);
+        }
+        finally
+        {
+            if (File.Exists(tempFile)) File.Delete(tempFile);
+        }
+        output.Close();
+    }
+
+    [Test]
+    public void SaveToFile_WithInvalidFormat_ThrowsException()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => 
+            AvansDevops.ProjectManagement.Reporting.Report.SaveToFile("content", "file.txt", (ReportFormat)999));
+    }
+}

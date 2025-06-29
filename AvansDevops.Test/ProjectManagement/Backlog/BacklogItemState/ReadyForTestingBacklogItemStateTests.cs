@@ -1,10 +1,8 @@
-using NUnit.Framework;
-using System;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
-using Moq;
 
+namespace AvansDevops.Test.ProjectManagement.Backlog.BacklogItemState;
 
 [TestFixture]
 public class ReadyForTestingBacklogItemStateTests
@@ -44,7 +42,7 @@ public class ReadyForTestingBacklogItemStateTests
     [Test] 
     public void Start_ThrowsInvalidOperationException_WhenNoTesterAssigned()
     {
-                // Arrange
+        // Arrange
         var user = new User("Developer", "dev@mail.com", UserRole.Developer);
         _backlogItem.SetUser(user);
 

@@ -1,3 +1,5 @@
+namespace AvansDevops.SCM.Adapter;
+
 public class GitAdapter : ISCMAdapter
 {
 

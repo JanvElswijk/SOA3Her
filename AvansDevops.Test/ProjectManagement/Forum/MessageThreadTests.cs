@@ -1,9 +1,9 @@
-using NUnit.Framework;
-using System;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
 using AvansDevops.ProjectManagement.Forum;
+
+namespace AvansDevops.Test.ProjectManagement.Forum;
 
 [TestFixture]
 public class MessageThreadTests

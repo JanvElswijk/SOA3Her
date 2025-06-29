@@ -1,7 +1,8 @@
-using NUnit.Framework;
-using AvansDevops.ProjectManagement;
 using AvansDevops.DevOps;
+using AvansDevops.ProjectManagement;
 using Moq;
+
+namespace AvansDevops.Test.ProjectManagement.Sprint;
 
 [TestFixture]
 public class ReviewStrategyTests

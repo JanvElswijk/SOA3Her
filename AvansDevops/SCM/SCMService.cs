@@ -1,3 +1,7 @@
+using AvansDevops.SCM.Adapter;
+
+namespace AvansDevops.SCM;
+
 public class SCMService
 {
     private readonly ISCMAdapter _scmAdapter;

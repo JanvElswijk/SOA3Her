@@ -1,3 +1,5 @@
+namespace AvansDevops.SCM.Adapter;
+
 public interface ISCMAdapter
 {
     void Commit(string message);

@@ -1,12 +1,7 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
-using AvansDevops.ProjectManagement.Project;
-using Moq;
-using AvansDevops.ProjectManagement.Forum;
-using AvansDevops.Notifications;
-using AvansDevops.Notifications.Adapter;
 using AvansDevops.ProjectManagement.Backlog;
+
+namespace AvansDevops.Test.ProjectManagement;
 
 [TestFixture]
 public class UserTests
@@ -35,7 +30,7 @@ public class UserTests
         // Assert
         Assert.That(role, Is.EqualTo(UserRole.Tester));
     }
-     [Test]
+    [Test]
     public void Update_CallsNotificationServiceUpdate()
     {
         // Arrange

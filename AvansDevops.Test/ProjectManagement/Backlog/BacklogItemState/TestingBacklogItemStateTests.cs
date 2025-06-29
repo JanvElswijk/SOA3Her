@@ -1,12 +1,10 @@
-using NUnit.Framework;
-using System;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
-using Moq;
-using AvansDevops.ProjectManagement.Project;
 using AvansDevops.ProjectManagement.Sprint;
+using Moq;
 
+namespace AvansDevops.Test.ProjectManagement.Backlog.BacklogItemState;
 
 [TestFixture]
 public class TestingBacklogItemStateTests
@@ -26,15 +24,15 @@ public class TestingBacklogItemStateTests
 
         _backlogItem = new BacklogItem("Test", "Desc", 3);
 
-        var project = new Project("Test Project", null, new List<User>(), null);
-        var backlog = new Backlog();
+        var project = new AvansDevops.ProjectManagement.Project.Project("Test Project", null, new List<User>(), null);
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
         backlog.AddBacklogItem(_backlogItem);
         var leadDeveloper = new User("Lead", "lead@test.com", UserRole.LeadDeveloper);
         var testers = new List<User>();
         var scrumMaster = new User("Scrum", "scrum@test.com", UserRole.ScrumMaster);
         var mockStrategy = new Mock<ISprintStrategy>();
 
-        var sprint = new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
+        var sprint = new AvansDevops.ProjectManagement.Sprint.Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockStrategy.Object, null);
         _backlogItem.SetSprint(sprint);
 
         _testingState = new TestingBacklogItemState(_backlogItem);
@@ -57,7 +55,7 @@ public class TestingBacklogItemStateTests
     [Test]
     public void Approve_ChangesStateToTodo()
     {
-           var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
+        var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
         _backlogItem.SetUser(developer);
         
         
@@ -71,7 +69,7 @@ public class TestingBacklogItemStateTests
     [Test]
     public void Reject_ChangesStateToTodo()
     {
-           var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
+        var developer = new User("Dev", "dev@mail.com", UserRole.Developer);
         _backlogItem.SetUser(developer);
 
         // Assert

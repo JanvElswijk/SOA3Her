@@ -1,20 +1,17 @@
-using NUnit.Framework;
-using System;
-using System.Linq;
-using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
-using AvansDevops.ProjectManagement.Forum;
+
+namespace AvansDevops.Test.ProjectManagement.Forum;
 
 [TestFixture]
 public class ForumTests
 {
-    private Forum _forum;
+    private AvansDevops.ProjectManagement.Forum.Forum _forum;
     private BacklogItem _backlogItem;
 
     [SetUp]
     public void SetUp()
     {
-        _forum = new Forum();
+        _forum = new AvansDevops.ProjectManagement.Forum.Forum();
         _backlogItem = new BacklogItem("Test Item", "Test Description", 5);
     }
 

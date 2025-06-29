@@ -1,6 +1,7 @@
 using AvansDevops.DevOps;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Forum;
+using AvansDevops.SCM;
 
 namespace AvansDevops.ProjectManagement.Project;
 public class Project

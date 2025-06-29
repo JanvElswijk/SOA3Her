@@ -1,45 +1,42 @@
-using NUnit.Framework;
-using Moq;
-using System.Collections.Generic;
-using AvansDevops.ProjectManagement;
-using NUnit.Framework.Internal;
 using AvansDevops.DevOps;
 using AvansDevops.Notifications.Adapter;
-using AvansDevops.ProjectManagement.Backlog;
-using AvansDevops.ProjectManagement.Project;
-using AvansDevops.ProjectManagement.Sprint;
+using AvansDevops.ProjectManagement;
+using AvansDevops.SCM;
+using AvansDevops.SCM.Adapter;
+using Moq;
 
+namespace AvansDevops.Test.ProjectManagement.Sprint;
 
 [TestFixture]
 public class SprintTests
 {
 
-    private Sprint CreateSprint(out List<User> testers, out User scrumMaster, out User leadDeveloper, Pipeline? pipeline = null)
+    private AvansDevops.ProjectManagement.Sprint.Sprint CreateSprint(out List<User> testers, out User scrumMaster, out User leadDeveloper, Pipeline? pipeline = null)
     {
         testers = new List<User> {
             new User("Tester1", "test@mail.com", UserRole.Tester),
             new User("Tester2", "test2@mail.com", UserRole.Tester)
         };
-       var mockAdapter = new Mock<ISCMAdapter>();
-            var service = new SCMService(mockAdapter.Object);
+        var mockAdapter = new Mock<ISCMAdapter>();
+        var service = new SCMService(mockAdapter.Object);
         scrumMaster = new User("Scrum Master", "scrum@mail.com", UserRole.ScrumMaster);
         leadDeveloper = new User("Lead Dev", "lead.dev@example.com", UserRole.LeadDeveloper);
-        var project = new Project("Test Project", service, testers, leadDeveloper);
-        var backlog = new Backlog();
+        var project = new AvansDevops.ProjectManagement.Project.Project("Test Project", service, testers, leadDeveloper);
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
         var mockSprintStrategy = new Mock<ISprintStrategy>().Object;
 
-        return new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockSprintStrategy, pipeline);
+        return new AvansDevops.ProjectManagement.Sprint.Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockSprintStrategy, pipeline);
     }
-    private Sprint CreateSprintWithNoObservers()
+    private AvansDevops.ProjectManagement.Sprint.Sprint CreateSprintWithNoObservers()
     {
         var testers = new List<User>();
         var scrumMaster = new User("Scrum Master", "scrum@mail.com", UserRole.ScrumMaster);
         var leadDeveloper = new User("Lead Dev", "lead.dev@example.com", UserRole.LeadDeveloper);
-        var project = new Project("Test Project", null, testers, leadDeveloper);
-        var backlog = new Backlog();
+        var project = new AvansDevops.ProjectManagement.Project.Project("Test Project", null, testers, leadDeveloper);
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
         var mockSprintStrategy = new Mock<ISprintStrategy>().Object;
 
-        return new Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockSprintStrategy, null);
+        return new AvansDevops.ProjectManagement.Sprint.Sprint(project, backlog, leadDeveloper, testers, scrumMaster, mockSprintStrategy, null);
     }
     [Test]
     public void AddObserver_AddsObserver()
@@ -225,23 +222,4 @@ public class SprintTests
         // Assert
         mockObserver.Verify(o => o.Update(null, testMessage), Times.Once);
     }
-
-    [Test]
-    public void NotifyTesters_NotifyAllTesters()
-    {
-    //TODO
-    }
-
-
-    [Test]
-    public void NotifyScrumMaster_NotifyScrumMaster()
-    {
-        // TODO
-    }
-    [Test]
-    public void NotifyProductOwner_NotifyProductOwner()
-    {
-        // TODO
-    }
-
 }

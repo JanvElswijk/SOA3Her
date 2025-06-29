@@ -11,6 +11,8 @@ using AvansDevops.Notifications.Adapter;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Project;
+using AvansDevops.SCM;
+using AvansDevops.SCM.Adapter;
 
 AnalysisActivity aa = new SonarqubeActivity();
 

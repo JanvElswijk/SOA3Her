@@ -1,9 +1,8 @@
-using NUnit.Framework;
-using System;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
-using Moq;
+
+namespace AvansDevops.Test.ProjectManagement.Backlog.BacklogItemState;
 
 [TestFixture]
 public class TodoBacklogItemStateTests

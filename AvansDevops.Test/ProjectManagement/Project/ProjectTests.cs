@@ -1,10 +1,10 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
-using AvansDevops.ProjectManagement.Project;
+using AvansDevops.SCM;
+using AvansDevops.SCM.Adapter;
 using Moq;
-using AvansDevops.ProjectManagement.Forum;
+
+namespace AvansDevops.Test.ProjectManagement.Project;
 
 [TestFixture]
 public class ProjectTests
@@ -12,20 +12,20 @@ public class ProjectTests
     private SCMService _scmService;
     private List<User> _developers;
     private User _productOwner;
-    private Project _project;
+    private AvansDevops.ProjectManagement.Project.Project _project;
 
     [SetUp]
     public void SetUp()
     {
-      var mockSCMAdapter = new Mock<ISCMAdapter>();
-    _scmService = new SCMService(mockSCMAdapter.Object);
+        var mockSCMAdapter = new Mock<ISCMAdapter>();
+        _scmService = new SCMService(mockSCMAdapter.Object);
         _developers = new List<User>
         {
             new User("john", "john@mail.com", UserRole.Developer),
             new User("jane", "jane@mail.com", UserRole.Developer)
         };
         _productOwner = new User("po", "po@mail.com", UserRole.ProductOwner);
-        _project = new Project("Test Project", _scmService, _developers, _productOwner);
+        _project = new AvansDevops.ProjectManagement.Project.Project("Test Project", _scmService, _developers, _productOwner);
     }
 
     [Test]

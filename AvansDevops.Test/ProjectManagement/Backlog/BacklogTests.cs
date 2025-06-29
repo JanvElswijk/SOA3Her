@@ -1,8 +1,6 @@
-using NUnit.Framework;
-using System;
-using AvansDevops.ProjectManagement;
 using AvansDevops.ProjectManagement.Backlog;
 
+namespace AvansDevops.Test.ProjectManagement.Backlog;
 
 [TestFixture]
 public class BacklogTests
@@ -11,7 +9,7 @@ public class BacklogTests
     public void Constructor_InitializesEmptyBacklog()
     {
         // Arrange & Act
-        var backlog = new Backlog();
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
 
         // Assert
         Assert.That(backlog._items, Is.Not.Null);
@@ -22,7 +20,7 @@ public class BacklogTests
     public void AddBacklogItem_AddsItem_WhenNotExists()
     {
         // Arrange
-               var backlog = new Backlog();
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
         var item = new BacklogItem("Test", "desc", 1);
 
         // Act
@@ -36,7 +34,7 @@ public class BacklogTests
     public void AddBacklogItem_Throws_WhenItemAlreadyExists()
     {
         // Arrange
-        var backlog = new Backlog();
+        var backlog = new AvansDevops.ProjectManagement.Backlog.Backlog();
 
         var item = new BacklogItem("Test", "desc", 1);
         backlog.AddBacklogItem(item);
