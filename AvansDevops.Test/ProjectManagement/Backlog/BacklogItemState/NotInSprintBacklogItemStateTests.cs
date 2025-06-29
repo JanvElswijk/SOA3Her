@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using System;
 
-namespace AvansDevops.Tests.ProjectManagement
-{
     [TestFixture]
     public class NotInSprintBacklogItemStateTests
     {
@@ -42,4 +40,3 @@ namespace AvansDevops.Tests.ProjectManagement
             Assert.That(ex.Message, Is.EqualTo("Cannot start a backlog item that is not in the sprint."));
         }
     }
-}

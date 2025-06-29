@@ -3,7 +3,7 @@ namespace AvansDevops.ProjectManagement;
 
 public class ReviewStrategy : ISprintStrategy
 {
-    public bool? Execute(Pipeline pipeline, string? summary)
+    public bool? Execute(Pipeline? pipeline, string? summary)
     {
         if (string.IsNullOrWhiteSpace(summary))
         {

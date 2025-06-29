@@ -8,7 +8,7 @@ public class User : INotificationObserver
     public string Name;
     private string Email;
     private UserRole Role;
-    private NotificationService _notificationService;
+    public NotificationService _notificationService;
 
 
 public User(){}

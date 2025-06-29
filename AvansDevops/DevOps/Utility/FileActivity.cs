@@ -50,10 +50,9 @@ public class FileActivity : UtilityActivity
                 Console.WriteLine($"[DEVOPS : Utility] Downloading file from URL: {_url}");
                 return true;
             default:
-                throw new ArgumentOutOfRangeException(nameof(_operation), _operation, null);
+                Console.WriteLine("[DEVOPS : Utility] Unknown file operation");
+                return false;
         }
-
-        return false;
     }
     
     private enum FileOperation
