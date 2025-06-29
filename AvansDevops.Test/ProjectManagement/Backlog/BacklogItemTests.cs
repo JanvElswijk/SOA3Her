@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
 using Moq;
 using AvansDevops.ProjectManagement.Sprint;
 

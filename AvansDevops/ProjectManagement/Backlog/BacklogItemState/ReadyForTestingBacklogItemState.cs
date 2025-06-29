@@ -1,4 +1,5 @@
-using AvansDevops.ProjectManagement;
+namespace AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+
 public class ReadyForTestingBacklogItemState : IBacklogItemState
 {
 

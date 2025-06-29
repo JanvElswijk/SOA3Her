@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Project;
 using Moq;
 using AvansDevops.ProjectManagement.Forum;

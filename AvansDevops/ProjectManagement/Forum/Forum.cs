@@ -1,3 +1,5 @@
+using AvansDevops.ProjectManagement.Backlog;
+
 namespace AvansDevops.ProjectManagement.Forum;
 
 public class Forum

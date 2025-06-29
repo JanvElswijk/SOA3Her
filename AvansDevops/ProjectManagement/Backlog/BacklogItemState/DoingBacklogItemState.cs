@@ -1,3 +1,5 @@
+namespace AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+
 public class DoingBacklogItemState : IBacklogItemState
 {
     private readonly BacklogItem _backlogItem;
@@ -29,4 +31,3 @@ public class DoingBacklogItemState : IBacklogItemState
         throw new InvalidOperationException("Cannot start a backlog item that is in progress.");
     }
 }
-

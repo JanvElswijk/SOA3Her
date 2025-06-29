@@ -1,6 +1,7 @@
 using AvansDevops.Notifications;
 using AvansDevops.Notifications.Adapter;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
 using Moq;
 
 [TestFixture]

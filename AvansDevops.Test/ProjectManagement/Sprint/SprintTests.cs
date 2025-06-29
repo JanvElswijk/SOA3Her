@@ -5,6 +5,7 @@ using AvansDevops.ProjectManagement;
 using NUnit.Framework.Internal;
 using AvansDevops.DevOps;
 using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Project;
 using AvansDevops.ProjectManagement.Sprint;
 

@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Forum;
 
 [TestFixture]

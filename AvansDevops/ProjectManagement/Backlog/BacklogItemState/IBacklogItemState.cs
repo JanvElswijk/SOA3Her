@@ -1,3 +1,5 @@
+namespace AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+
 public interface IBacklogItemState
 {
     void Complete();

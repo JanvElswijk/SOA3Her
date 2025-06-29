@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 using AvansDevops.ProjectManagement;
-
+using AvansDevops.ProjectManagement.Backlog;
 
 
 [TestFixture]

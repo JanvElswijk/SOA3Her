@@ -1,5 +1,6 @@
 using AvansDevops.Notifications.Adapter;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
 
 namespace AvansDevops.Notifications;
 public class NotificationService

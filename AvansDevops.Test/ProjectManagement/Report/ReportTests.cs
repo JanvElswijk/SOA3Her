@@ -4,6 +4,8 @@ using System.IO;
 using System.Collections.Generic;
 using Moq;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
 using AvansDevops.ProjectManagement.Reporting;
 using AvansDevops.ProjectManagement.Sprint;
 using AvansDevops.ProjectManagement.Project;

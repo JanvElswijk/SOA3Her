@@ -1,5 +1,6 @@
 using AvansDevops.Notifications;
 using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement.Backlog;
 
 namespace AvansDevops.ProjectManagement;
 

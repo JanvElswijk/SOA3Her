@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using AvansDevops.ProjectManagement;
+using AvansDevops.ProjectManagement.Backlog;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
 using Moq;
 using AvansDevops.ProjectManagement.Project;
 using AvansDevops.ProjectManagement.Sprint;

@@ -6,6 +6,7 @@ using Moq;
 using AvansDevops.ProjectManagement.Forum;
 using AvansDevops.Notifications;
 using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement.Backlog;
 
 [TestFixture]
 public class UserTests

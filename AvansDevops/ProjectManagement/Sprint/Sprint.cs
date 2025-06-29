@@ -1,11 +1,12 @@
 using AvansDevops.DevOps;
 using AvansDevops.Notifications.Adapter;
+using AvansDevops.ProjectManagement.Backlog;
 using AvansDevops.ProjectManagement.Reporting;
 
 namespace AvansDevops.ProjectManagement.Sprint;
 public class Sprint 
 {
-    public Backlog _backlogItems { get; private set; }
+    public Backlog.Backlog _backlogItems { get; private set; }
     private List<User> _testers;
     private User _leadDeveloper;
     private User _scrumMaster;
@@ -22,7 +23,7 @@ public class Sprint
         
     }
 
-    public Sprint(Project.Project project, Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
+    public Sprint(Project.Project project, Backlog.Backlog backlogItems, User leadDeveloper, List<User> testers, User scrumMaster, ISprintStrategy strategy, Pipeline? pipeline)
     {
         Project = project;
         _strategy = strategy;

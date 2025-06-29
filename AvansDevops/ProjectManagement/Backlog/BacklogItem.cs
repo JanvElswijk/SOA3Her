@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using AvansDevops.ProjectManagement;
-using AvansDevops.Notifications.Adapter;
-using AvansDevops.ProjectManagement.Sprint;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+
+namespace AvansDevops.ProjectManagement.Backlog;
 
 public class BacklogItem
 {
@@ -11,7 +9,7 @@ public class BacklogItem
     private string _description;
     public IBacklogItemState State;
     public int StoryPoints;
-    private Sprint? _sprint;
+    private Sprint.Sprint? _sprint;
     private List<BacklogItem> _activities = new List<BacklogItem>();
 
     public User? User;
@@ -27,7 +25,7 @@ public class BacklogItem
 
 
     //Voeg een item toe aan de sprint en zet de state naar Todo
-    public void SetSprint(Sprint sprint)
+    public void SetSprint(Sprint.Sprint sprint)
     {
         ChangeState(new TodoBacklogItemState(this));
         _sprint = sprint;
@@ -70,7 +68,7 @@ public class BacklogItem
     
  
 
-    public virtual Sprint? GetSprint()
+    public virtual Sprint.Sprint? GetSprint()
     {
         return this._sprint;
     }
@@ -87,8 +85,6 @@ public class BacklogItem
 
 
 }
-
-
 
 
 //Backlog aanmaken

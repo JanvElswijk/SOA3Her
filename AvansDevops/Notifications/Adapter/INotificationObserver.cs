@@ -1,3 +1,5 @@
+using AvansDevops.ProjectManagement.Backlog;
+
 namespace AvansDevops.Notifications.Adapter;
 
 public interface INotificationObserver

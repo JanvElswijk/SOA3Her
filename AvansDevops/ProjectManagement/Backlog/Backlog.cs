@@ -1,4 +1,4 @@
-namespace AvansDevops.ProjectManagement;
+namespace AvansDevops.ProjectManagement.Backlog;
 public class Backlog
 {
     public List<BacklogItem> _items;

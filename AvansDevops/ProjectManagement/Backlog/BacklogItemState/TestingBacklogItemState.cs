@@ -1,3 +1,5 @@
+namespace AvansDevops.ProjectManagement.Backlog.BacklogItemState;
+
 public class TestingBacklogItemState : IBacklogItemState
 {
     private readonly BacklogItem _backlogItem;

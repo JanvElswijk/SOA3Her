@@ -1,7 +1,8 @@
 using NUnit.Framework;
 using System;
+using AvansDevops.ProjectManagement.Backlog.BacklogItemState;
 
-    [TestFixture]
+[TestFixture]
     public class NotInSprintBacklogItemStateTests
     {
         private IBacklogItemState _state;
